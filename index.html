@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Media Ajar Sistem Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f0f3f1;--pn:#fff;--ink:#13211d;--mu:#5a6e67;--ln:#d0dad5;--sb:#0e1d19;--bin:#0b7a64;--dec:#2159d6;--oct:#a8650c;--hex:#7a35e0;--ok:#157f3b;--no:#b3261e;--on:#fff;--m:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0b1411;--pn:#13211d;--ink:#e5f0eb;--mu:#93aaa2;--ln:#263b34;--sb:#070d0b;--bin:#2fd1ae;--dec:#6c9bff;--oct:#f0a641;--hex:#b58cff;--ok:#4ade80;--no:#ff8a80;--on:#08130f}}
+:root[data-theme=dark]{--bg:#0b1411;--pn:#13211d;--ink:#e5f0eb;--mu:#93aaa2;--ln:#263b34;--sb:#070d0b;--bin:#2fd1ae;--dec:#6c9bff;--oct:#f0a641;--hex:#b58cff;--ok:#4ade80;--no:#ff8a80;--on:#08130f}
+*{box-sizing:border-box}
+body{margin:0;display:grid;grid-template-columns:290px 1fr;min-height:100vh;background:var(--bg);color:var(--ink);font:15.5px/1.6 "Space Grotesk",system-ui,sans-serif}
+.sb{position:sticky;top:0;height:100vh;overflow:auto;background:var(--sb);color:#cfe0d9;padding:22px 14px;display:flex;flex-direction:column}
+.logo{display:flex;align-items:center;gap:12px;padding:0 8px 18px;color:#fff;font:700 1.15rem/1.2 "Space Grotesk",sans-serif}
+.logo small{display:block;font:400 .78rem "Space Grotesk",sans-serif;color:#8fb0a4}
+.led{display:grid;grid-template-columns:repeat(2,14px);gap:4px}
+.led i{width:14px;height:14px;border-radius:4px;background:#ffffff1f}
+.led i.on{background:#2fd1ae;box-shadow:0 0 10px #2fd1ae}
+#nav{flex:1}
+.wk{display:flex;gap:12px;align-items:baseline;width:100%;text-align:left;background:none;border:0;color:inherit;font:inherit;padding:8px 10px;border-radius:10px;cursor:pointer}
+.wk b{font:700 .8rem var(--m);color:#7fa89b;min-width:2ch}
+.wk:hover{background:#ffffff12}
+.wk.on{background:#ffffff1c;color:#fff}
+.wk.em{opacity:.4}
+.sl{margin:2px 0 10px 34px;display:grid;gap:2px}
+.sl a{padding:5px 10px;border-left:2px solid #ffffff26;color:#a9c2b9;text-decoration:none;font-size:.9rem}
+.sl a:hover{color:#fff}
+.sl a.on{color:#fff;border-color:#2fd1ae;background:#ffffff10}
+.th{margin:14px 8px 0;font:inherit;font-size:.82rem;color:#cfe0d9;background:none;border:1px solid #ffffff2e;border-radius:8px;padding:6px 10px;cursor:pointer;align-self:flex-start}
+.mn{padding:36px clamp(18px,4vw,60px) 80px;background:radial-gradient(circle,var(--ln) 1px,transparent 1.3px) 0 0/22px 22px,var(--bg)}
+#pg{max-width:1040px;margin:0 auto}
+.crumb{margin:0;color:var(--mu);font-size:.88rem}
+h1{font:700 2.1rem/1.15 "Space Grotesk",sans-serif;letter-spacing:-.02em;margin:.15em 0 .2em}
+.lead{color:var(--mu);margin:0 0 18px;max-width:72ch}
+p{margin:.5em 0}
+code,pre{font-family:var(--m)}
+.mu{color:var(--mu);font-size:.88rem}
+.card{background:var(--pn);border:1px solid var(--ln);border-radius:14px;padding:16px;margin:14px 0}
+.g2,.g3{display:grid;gap:16px;align-items:start}
+.g2{grid-template-columns:repeat(auto-fit,minmax(310px,1fr))}
+.g3{grid-template-columns:repeat(auto-fill,minmax(215px,1fr))}
+.g2>.card,.g3>.card{margin:0}
+.rc{border-left:6px solid var(--c)}
+.rh{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.n{display:inline-grid;place-items:center;width:24px;height:24px;margin-right:8px;border-radius:50%;background:var(--c);color:var(--on);font-size:.8rem}
+.big{font:700 1.6rem var(--m);color:var(--c);word-break:break-all}
+sub{font-size:.55em}
+.eq,.dv{font:.95rem/1.8 var(--m)}
+.eq b,.dv b{color:var(--c,var(--bin))}
+.tab{overflow-x:auto;margin:.4em 0}
+.tg{padding:3px 11px;border:1px solid var(--ln);border-radius:999px;font-size:.88rem}
+.sw{display:grid;grid-template-columns:repeat(9,1fr);gap:6px;margin:12px 0;max-width:600px}
+.sw2{grid-template-columns:repeat(2,92px)}
+.bit{aspect-ratio:3/4;display:flex;flex-direction:column;align-items:center;justify-content:center;font:700 1.5rem var(--m);color:var(--ink);background:var(--bg);border:2px solid var(--ln);border-radius:10px;padding:0;cursor:pointer;transition:background .15s,color .15s,box-shadow .15s,transform .1s}
+.bit small{font:.64rem var(--m);opacity:.7}
+.bit:active{transform:scale(.93)}
+.bit[aria-pressed=true]{background:var(--bin);border-color:var(--bin);color:var(--on);box-shadow:0 0 18px color-mix(in srgb,var(--bin) 55%,transparent)}
+.pad{border-style:dashed;opacity:.45;cursor:default}
+.lb{grid-column:1/-1;font-size:.84rem;font-weight:600;color:var(--c);margin-top:6px}
+.br{text-align:center;font:700 1.5rem var(--m);color:var(--c);border-bottom:4px solid var(--c);border-radius:0 0 10px 10px;padding-bottom:2px}
+.gs{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.g{display:flex;flex-direction:column;align-items:center;border:2px solid var(--c);border-radius:10px;padding:3px 9px;font-family:var(--m)}
+.g i{font-style:normal;letter-spacing:.1em}
+.g b{color:var(--c);font-size:1.2rem}
+.row{display:flex;gap:8px;margin-top:10px}
+.btn{display:inline-block;text-decoration:none;font:inherit;font-weight:600;cursor:pointer;color:var(--on);background:var(--ink);border:0;border-radius:10px;padding:9px 16px}
+.pl{font:inherit;font-size:.86rem;padding:5px 12px;border-radius:999px;border:1px solid var(--ln);background:var(--pn);color:var(--ink);cursor:pointer}
+.pl:hover{border-color:var(--bin)}
+.seg{display:flex;gap:6px}
+.seg button{flex:1;font:inherit;font-weight:600;font-size:.88rem;cursor:pointer;color:var(--c,var(--bin));background:none;border:2px solid var(--c,var(--bin));border-radius:10px;padding:7px 12px}
+.seg .on{background:var(--c,var(--bin));color:var(--on)}
+.cv .seg{margin-bottom:10px}
+input{font:700 1.4rem var(--m);color:var(--ink);background:var(--bg);border:2px solid var(--ln);border-radius:12px;padding:8px 12px}
+#iv,#qa{width:100%}
+input[type=number]{width:130px;font-size:1.2rem}
+input[type=range]{width:min(260px,100%);padding:0;border:0;background:none;accent-color:var(--bin)}
+label{display:flex;align-items:center;gap:8px}
+.er{color:var(--no);min-height:1.3em;margin:.4em 0 0;font-size:.9rem}
+.ok{color:var(--ok);font-weight:700}
+.no{color:var(--no);font-weight:700}
+.q{font-size:1.2rem}
+:focus-visible{outline:3px solid var(--dec);outline-offset:2px}
+.hub{display:block;width:100%;max-width:380px;margin:8px auto 0}
+.hub line{stroke:var(--mu);stroke-width:2;marker-start:url(#a);marker-end:url(#a)}
+.wv{display:block;width:100%;height:auto;margin-top:8px;background:var(--bg);border-radius:10px}
+table{border-collapse:collapse;font:.9rem var(--m);margin-top:8px}
+th,td{padding:4px 12px;text-align:center;border-bottom:1px solid var(--ln)}
+.tt{font-weight:600}
+.tt .hit{background:color-mix(in srgb,var(--bin) 22%,transparent);font-weight:700}
+.tt.big{width:100%;font-size:1rem}
+summary{cursor:pointer;font-weight:600}
+.lamp{width:18px;height:18px;border-radius:50%;background:var(--ln);transition:.15s}
+.lamp.on{background:#f7c948;box-shadow:0 0 14px #f7c948}
+.qb{width:44px;font:700 1rem var(--m);color:var(--ink);background:var(--bg);border:2px solid var(--ln);border-radius:8px;cursor:pointer}
+.bt{display:flex;gap:4px;margin-top:10px}
+.c{width:38px;height:46px;display:grid;place-items:center;font:700 1.15rem var(--m);border:2px solid var(--ln);border-radius:8px;background:var(--bg);color:var(--ink);padding:0}
+.c:nth-child(4){margin-right:10px}
+.c.on{background:var(--c);border-color:var(--c);color:var(--on)}
+.c.s{border-color:var(--oct)}
+button.c{cursor:pointer}
+.km{display:grid;gap:6px;max-width:470px}
+.kh{display:grid;place-items:center;font:700 .85rem var(--m);color:var(--mu)}
+.kc{position:relative;aspect-ratio:1;font:700 1.6rem var(--m);color:var(--ink);background:var(--bg);border:2px solid var(--ln);border-radius:10px;cursor:pointer;padding:0}
+.kc small{position:absolute;top:4px;left:6px;font:.62rem var(--m);opacity:.6}
+.kc.v1{background:color-mix(in srgb,var(--bin) 20%,var(--pn));border-color:var(--bin)}
+.kc.v2{background:repeating-linear-gradient(45deg,var(--pn) 0 6px,var(--ln) 6px 12px)}
+.dots{position:absolute;bottom:5px;left:0;right:0;display:flex;justify-content:center;gap:3px}
+.dots i{width:9px;height:9px;border-radius:50%}
+.sq{display:inline-block;width:11px;height:11px;border-radius:3px}
+.k2{font:700 1.6rem var(--m)}
+.pn{display:flex;justify-content:space-between;gap:10px;margin-top:36px}
+.ck{display:block;width:100%;max-width:640px;height:auto;margin:8px 0;background:var(--bg);border-radius:10px}.w{fill:none;stroke:var(--ln);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}.w.h{stroke:var(--bin)}.dt{fill:var(--ln)}.dt.h{fill:var(--bin)}.gb{fill:var(--pn);stroke:var(--ink);stroke-width:2}.gb.on{fill:color-mix(in srgb,var(--bin) 24%,var(--pn))}.gb.nf{fill:none}.gl{font:700 12px var(--m);fill:var(--ink)}h2{font-size:1.25rem;margin:1.2em 0 .4em}
+@media(max-width:860px){body{display:block}.sb{position:static;height:auto}.c{width:30px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<aside class="sb">
+<div class="logo"><span class="led"><i class="on"></i><i></i><i></i><i class="on"></i></span><span>Sistem Digital<small>Media ajar interaktif</small></span></div>
+<nav id="nav" aria-label="Daftar minggu"></nav>
+<button class="th" id="th">Ganti tema</button>
+</aside>
+<main class="mn"><div id="pg"></div></main>
+<script>
+const $=s=>document.querySelector(s),M={};
+try{const t=localStorage.t;if(t)document.documentElement.dataset.theme=t}catch(e){}
+const COL={2:'bin',8:'oct',10:'dec',16:'hex'},NM={2:'Biner',8:'Oktal',10:'Desimal',16:'Heksa'};
+const pad=(b,k)=>b.padStart(Math.ceil(b.length/k)*k,'0');
+const grp=(b,k)=>pad(b,k).match(new RegExp('.{'+k+'}','g'));
+const dg=(b,k)=>grp(b,k).map(x=>parseInt(x,2).toString(16).toUpperCase());
+const tr=s=>s.replace(/^0+(?=.)/,'');
+const bn=(c,k)=>parseInt(c,16).toString(2).padStart(k,'0');
+const rc=(n,t,c,body,big,k)=>`<div class="card rc" style="--c:var(--${c})"><div class="rh"><b>${n?`<span class="n">${n}</span>`:''}${t}</b>${big!=null?`<span class="big">${big}<sub>${k}</sub></span>`:''}</div>${body}</div>`;
+const chips=(b,k)=>{const d=dg(b,k),c=k==4?'hex':'oct';return '<div class="gs">'+grp(b,k).map((x,i)=>`<span class="g" style="--c:var(--${c})"><i>${x}</i><b>${d[i]}</b></span>`).join('')+'</div>'};
+const sum=b=>{const w=[...b].map((c,i)=>c=='1'?2**(b.length-1-i):0).filter(Boolean);return (w.length?w.join(' + '):'0')+' = <b>'+parseInt(b,2)+'</b>'};
+const sg=(a,c)=>`<div class="seg">${a.map(([v,l,k])=>`<button data-k="${v}" class="${v==c?'on':''}" style="--c:var(--${k||'bin'})">${l}</button>`).join('')}</div>`;
+const act=(el,k)=>el.querySelectorAll('[data-k]').forEach(x=>x.classList.toggle('on',x.dataset.k==k));
+const cl=x=>Math.max(-128,Math.min(127,Math.round(+x)||0));
+
+/* ===== MINGGU 1 ===== */
+const pengantar=el=>{
+const apl=[['Komunikasi','Ponsel, email, pesan instan, WiFi, dan Bluetooth untuk terhubung seluruh dunia.'],['Hiburan','TV digital, streaming, dan game online dengan kualitas tinggi dan interaktif.'],['Industri','Otomasi manufaktur dan layanan kesehatan untuk efisiensi dan akurasi lebih baik.'],['Otomasi rumah','Lampu pintar, termostat, kamera, dan kunci digital yang bisa diatur dari jarak jauh.'],['IoT','Kulkas dan mesin cuci yang terhubung internet, belajar kebiasaan pengguna.'],['Kecerdasan buatan','Pengolahan data besar (big data), algoritma belajar, otomasi industri 4.0.']];
+el.innerHTML=`<div class="g2">
+${rc(0,'Apa itu Sistem Digital?','bin','<p><b>Sistem digital</b> adalah sistem yang bekerja dengan data dalam bentuk biner: angka 0 dan 1.</p><p>Digunakan untuk mengolah, menyimpan, dan mengirim informasi dengan akurasi dan kecepatan tinggi.</p>')}
+${rc(0,'Analog vs Digital','dec','<p><b>Analog:</b> Memakai sinyal kontinu (gelombang). Contoh: radio AM/FM, kaset audio, rekam video VHS. Rentan gangguan luar (noise).</p><p><b>Digital:</b> Memakai sinyal diskrit (angka 0 dan 1). Contoh: CD, DVD, streaming, smartphone. Tahan gangguan, kualitas stabil.</p>')}
+${rc(0,'Kenapa Digital?','hex','<p>✓ <b>Akurasi tinggi:</b> Data tidak berubah saat ditransmisi (0 tetap 0, 1 tetap 1).</p><p>✓ <b>Tahan gangguan:</b> Noise kecil tidak mempengaruhi pembacaan 0/1.</p><p>✓ <b>Mudah diproses:</b> Komputer hanya "mengerti" 0 dan 1.</p><p>✓ <b>Hemat ruang:</b> Data besar bisa dimampatkan dan disimpan dalam volume kecil.</p>')}
+${rc(0,'Karakteristik data digital','oct','<p><b>Diskrit (terputus):</b> Data bukan kurva mulus, tapi nilai-nilai terpisah. Misal, suara analog yang mulus diubah jadi sampel-sampel angka.</p><p><b>Biner (basis 2):</b> Hanya 0 dan 1. Mudah diimplementasikan dengan transistor (on/off) di chip elektronik.</p>')}
+</div>
+<div class="card"><b>Proses konversi analog → digital</b><p class="mu">Sinyal analog (gelombang terus-menerus) → <b>sampling</b> (ambil sampel) → <b>kuantisasi</b> (bulatkan ke level diskrit) → sinyal digital (nilai 0/1).</p><p>Geser slider untuk ubah resolusi (jumlah bit). Semakin banyak bit, semakin halus hasil digital mendekati analog asli.</p>
+<label style="margin-top:12px"><input type="range" id="rs" min="1" max="5" value="2" aria-label="Resolusi bit"><b id="rl"></b></label>
+<svg id="wv" class="wv" viewBox="0 0 600 180" role="img" aria-label="Gelombang analog dan hasil digitalnya"></svg>
+<p class="mu"><span style="color:var(--dec)">Garis putus: sinyal analog</span> | <span style="color:var(--bin)">Garis tebal: sinyal digital</span></p>
+</div>
+<h2>Aplikasi dalam kehidupan sehari-hari</h2><div class="g3">${apl.map(a=>`<div class="card"><b>${a[0]}</b><p class="mu">${a[1]}</p></div>`).join('')}</div>`;
+const f=i=>Math.sin(i/48*Math.PI*4),Y=v=>90-v*70,X=i=>i*12.5;
+const dr=()=>{const b=+$('#rs').value,L=2**b;let A='',D='';
+for(let i=0;i<=48;i++)A+=`${X(i)},${Y(f(i))} `;
+for(let i=0;i<48;i++){const q=Math.round((f(i)+1)/2*(L-1))/(L-1)*2-1;D+=`${X(i)},${Y(q)} ${X(i+1)},${Y(q)} `}
+$('#wv').innerHTML=`<polyline points="${D}" fill="none" stroke="var(--bin)" stroke-width="3"/><polyline points="${A}" fill="none" stroke="var(--dec)" stroke-width="2" stroke-dasharray="5 4"/>`;
+$('#rl').textContent=`${b} bit = ${L} level (resolusi)`};
+$('#rs').oninput=dr;dr()};
+
+const konsepBiner=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'Basis 2 (Binary)','bin','<p><b>Digit:</b> Hanya ada 0 dan 1 (dua simbol saja).</p><p><b>Bobot posisi:</b> Setiap posisi bernilai 2<sup>n</sup>.</p><p class="eq">Contoh: <code>1101<sub>2</sub></code> = 1×2³ + 1×2² + 0×2¹ + 1×2⁰ = 8 + 4 + 0 + 1 = 13</p>')}
+${rc(0,'Bit dan Byte','hex','<p><b>Bit:</b> Digit biner tunggal (0 atau 1). Satuan terkecil data digital.</p><p><b>Nibble:</b> 4 bit (half-byte).</p><p><b>Byte:</b> 8 bit (satuan standar penyimpanan).</p><p><b>Word:</b> 16 bit (atau lebih, tergantung arsitektur CPU).</p>')}
+${rc(0,'MSB dan LSB','oct','<p><b>MSB (Most Significant Bit):</b> Bit paling kiri, bobot terbesar (posisi tertinggi).</p><p><b>LSB (Least Significant Bit):</b> Bit paling kanan, bobot terkecil (posisi terendah).</p><p class="eq">Contoh: <code><b>1</b>1010010</code> ← MSB | LSB ← <code>1101001<b>0</b></code></p>')}
+${rc(0,'Nilai posisi 2ⁿ','dec','<p><b>Ingat bobot tiap posisi:</b></p><p style="text-align:center;font:700 .9rem var(--m);letter-spacing:.1em;margin-top:8px">2⁷ 2⁶ 2⁵ 2⁴ 2³ 2² 2¹ 2⁰<br>128 64 32 16 8 4 2 1</p><p class="mu">Jika bit bernilai 1, tambahkan bobotnya. Jika 0, lewati.</p>')}
+</div>`;
+};
+
+const metodeKonversi=el=>{
+el.innerHTML=`<div class="card"><p><b style="font-size:1.1em">Strategi: ubah dulu ke BINER, lalu ke basis lain</b></p><p class="mu">Biner adalah "jembatan" untuk semua konversi. Kenapa? Karena:</p><p>✓ Desimal, oktal, heksa adalah cara lain tulis angka. Biner adalah cara komputer "menyimpan" angka (urutan transistor on/off).</p><p>✓ Kelompok bit memudahkan konversi: 4 bit sekaligus untuk heksa (16 nilai), 3 bit untuk oktal (8 nilai).</p></div>
+<svg class="hub" viewBox="0 0 320 230" role="img" aria-label="Biner di tengah, terhubung dengan desimal, oktal, dan heksa">
+<defs><marker id="a" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L8 4L0 8z" style="fill:var(--mu)"/></marker></defs>
+<line x1="160" y1="52" x2="160" y2="78"/><line x1="125" y1="146" x2="88" y2="178"/><line x1="195" y1="146" x2="232" y2="178"/>
+<rect x="110" y="6" width="100" height="40" rx="10" style="fill:var(--dec)"/><rect x="100" y="84" width="120" height="56" rx="12" style="fill:var(--bin)"/>
+<rect x="10" y="184" width="120" height="40" rx="10" style="fill:var(--oct)"/><rect x="190" y="184" width="120" height="40" rx="10" style="fill:var(--hex)"/>
+<g text-anchor="middle" font-weight="700" font-size="14" style="fill:var(--on)"><text x="160" y="31">Desimal</text><text x="160" y="108" font-size="18">Biner</text><text x="160" y="127" font-size="11" font-weight="400">basis 2</text><text x="70" y="209">Oktal</text><text x="250" y="209">Heksa</text></g>
+<g font-size="11" style="fill:var(--mu)"><text x="170" y="62">÷ 2</text><text x="170" y="77">bobot</text><text x="4" y="156">3 bit</text><text x="316" y="156" text-anchor="end">4 bit</text></g></svg>
+
+<div class="g2">
+${rc(1,'Desimal → Biner','dec','<p><b>Metode: Bagi 2 berulang</b></p><p>Bagi desimal dengan 2, catat sisa (0 atau 1). Terus bagi hasilnya hingga 0. Baca sisa dari bawah ke atas.</p><p class="eq">Contoh 13 ÷ 2:</p><p class="eq" style="font-size:.9rem">13÷2 = 6 sisa <b>1</b><br>6÷2 = 3 sisa <b>0</b><br>3÷2 = 1 sisa <b>1</b><br>1÷2 = 0 sisa <b>1</b><br>Baca dari bawah: <b>1101</b></p>')}
+${rc(2,'Biner → Desimal','dec','<p><b>Metode: Jumlahkan bobot</b></p><p>Tiap posisi bit bernilai 2<sup>n</sup>. Jika bit = 1, tambahkan bobotnya. Jika 0, lewati.</p><p class="eq">Contoh 1101₂:<br>1×2³ + 1×2² + 0×2¹ + 1×2⁰<br>= 8 + 4 + 0 + 1 = <b>13</b></p>')}
+${rc(3,'Biner → Heksa','hex','<p><b>Metode: Kelompok 4 bit</b></p><p>Kelompokkan bit dari kanan, setiap 4 bit jadi 1 digit heksa. Kurang dari 4? Tambah 0 di kiri.</p><p class="eq">Contoh 11010110₂:<br>1101 | 0110<br>13 (D) | 6 (6)<br>= <b>0xD6</b></p>')}
+${rc(4,'Biner → Oktal','oct','<p><b>Metode: Kelompok 3 bit</b></p><p>Kelompokkan bit dari kanan, setiap 3 bit jadi 1 digit oktal. Kurang dari 3? Tambah 0 di kiri.</p><p class="eq">Contoh 11010110₂:<br>011 | 010 | 110<br>3 | 2 | 6<br>= <b>326₈</b></p>')}
+</div>
+
+<details class="card" open><summary>Tabel konversi 0–15 (acuan cepat)</summary><table style="width:100%;font-size:.9rem"><tr><th style="color:var(--dec)">Desimal</th><th style="color:var(--bin)">Biner (4-bit)</th><th style="color:var(--oct)">Oktal</th><th style="color:var(--hex)">Heksa</th></tr>${Array.from({length:16},(_,i)=>`<tr><td>${i}</td><td><code>${i.toString(2).padStart(4,'0')}</code></td><td>${i.toString(8)}</td><td><code>0x${i.toString(16).toUpperCase()}</code></td></tr>`).join('')}</table></details>`};
+
+const labKonsep=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'Cara kerja Bit Lab','bin','<p>Layar interaktif menampilkan 8 bit yang bisa dihidupkan/matikan. Setiap bit punya bobot tetap: 2<sup>n</sup>.</p><p class="mu">Gunakan untuk memahami:</p><p>• Bagaimana bit 0 dan 1 membentuk angka</p><p>• Pengelompokan 4 bit untuk heksa dan 3 bit untuk oktal</p><p>• Relasi antara biner, desimal, heksa, oktal</p>')}
+${rc(0,'Strategi latihan','hex','<p>Ketuk saklar satu per satu atau pakai Acak untuk pola berbeda. Perhatikan:</p><p>✓ Hasil desimal saat bit diubah</p><p>✓ Kelompok 4 bit jadi digit heksa</p><p>✓ Kelompok 3 bit jadi digit oktal</p><p>Cobalah buat angka favorit dan lihat bentuk binernya!</p>')}
+</div>
+<div class="card"><b>Contoh membaca hasil</b><p class="mu">Bit = <code>01011010</code>₂:</p><p>• <b>Desimal:</b> 0+64+32+0+8+0+2+0 = 106</p><p>• <b>Heksa:</b> 0101 | 1010 = 5 | A = 0x5A</p><p>• <b>Oktal:</b> 001 | 011 | 010 = 1 | 3 | 2 = 132₈</p></div>`;
+};
+
+const lab=el=>{
+let v=[0,0,1,0,1,1,0,1];
+el.innerHTML=`<div class="card">
+<p><b>Ketuk bit untuk nyalakan/matikan.</b> Lihat bagaimana nilai desimal, heksa, dan oktal berubah.</p>
+<p class="mu">Setiap bit memiliki bobot (power of 2). Bit paling kanan = 2⁰ (bobot 1), paling kiri = 2⁷ (bobot 128).</p>
+<div class="sw"><div class="bit pad" aria-hidden="true"><span>0</span><small>pad</small></div>${v.map((_,i)=>`<button class="bit" data-i="${i}"><span></span><small>2<sup>${7-i}</sup></small></button>`).join('')}<div id="gx" style="display:contents"></div></div>
+<div class="row"><button class="btn" id="ra">Acak</button><button class="btn" id="rz">Nol semua</button><button class="btn" id="ro">Semua 1</button></div>
+</div><div class="g3" id="rs"></div>`;
+const up=()=>{
+const b=v.join(''),h=dg(b,4),o=dg(b,3);
+el.querySelectorAll('[data-i]').forEach((x,i)=>{x.setAttribute('aria-pressed',!!v[i]);x.firstChild.textContent=v[i]});
+$('#gx').innerHTML=`<div class="lb" style="--c:var(--hex)">Kelompok 4 bit dari kanan → digit heksa</div>${h.map((d,i)=>`<div class="br" style="--c:var(--hex);grid-column:${2+i*4}/span 4">${d}</div>`).join('')}<div class="lb" style="--c:var(--oct)">Kelompok 3 bit dari kanan → digit oktal</div>${o.map((d,i)=>`<div class="br" style="--c:var(--oct);grid-column:${1+i*3}/span 3">${d}</div>`).join('')}`;
+$('#rs').innerHTML=rc(0,'Desimal (jumlahkan bobot)','dec',`<p class="eq">${sum(b)}</p>`,parseInt(b,2),10)+rc(0,'Heksa (per 4 bit)','hex',`<p class="eq">${grp(b,4).join(' | ')} → ${h.join(' ')}</p>`,tr(h.join('')),16)+rc(0,'Oktal (per 3 bit)','oct',`<p class="eq">${grp(b,3).join(' | ')} → ${o.join(' ')}</p>`,tr(o.join('')),8)};
+el.onclick=e=>{const x=e.target.closest('[data-i]');if(x){v[x.dataset.i]^=1;up()}};
+$('#ra').onclick=()=>{v=v.map(()=>Math.random()<.5?1:0);up()};
+$('#rz').onclick=()=>{v=v.map(()=>0);up()};
+$('#ro').onclick=()=>{v=v.map(()=>1);up()};
+up()};
+
+const conv=el=>{
+let k=10;
+el.innerHTML=`<div class="card cv">${sg([[10,'Desimal','dec'],[2,'Biner','bin'],[8,'Oktal','oct'],[16,'Heksa','hex']],10)}<input id="iv" value="173" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="Bilangan"><p class="er" id="er"></p></div><div class="g2" id="out"></div>`;
+const RX={10:/^\d+$/,2:/^[01]+$/,8:/^[0-7]+$/,16:/^[0-9a-f]+$/i},OK={10:'angka 0–9',2:'angka 0 dan 1',8:'angka 0–7',16:'angka 0–9 dan huruf A–F'};
+const run=()=>{
+const i=$('#iv'),v=i.value.trim(),er=$('#er'),out=$('#out');
+i.inputMode=k==16?'text':'numeric';act(el,k);
+out.innerHTML='';er.textContent='';
+if(!v)return;
+if(!RX[k].test(v)){er.textContent=`Bilangan ${NM[k].toLowerCase()} hanya boleh berisi ${OK[k]}.`;return}
+const N=parseInt(v,k);
+if(N>65535){er.textContent='Batas media ini 16 bit: maksimum 65535 desimal.';return}
+const B=N.toString(2);let s1;
+if(k==10){let n=N,L=[];do{L.push(`${n} ÷ 2 = ${n>>1} sisa <b>${n&1}</b>`);n>>=1}while(n>0);
+s1=`<div class="dv">${L.join('<br>')}</div><p>Baca sisa dari <b>bawah ke atas</b>.</p>`}
+else if(k==2)s1='<p>Sudah berbentuk biner.</p>';
+else{const z=k==8?3:4,c=COL[k];
+s1=`<div class="gs">${[...v.toUpperCase()].map(d=>`<span class="g" style="--c:var(--${c})"><b>${d}</b><i>${bn(d,z)}</i></span>`).join('')}</div><p>1 digit ${NM[k].toLowerCase()} = ${z} bit. Gabungkan semua bit.</p>`}
+out.innerHTML=rc(1,'Ubah ke biner','bin',s1,B,2)+rc(2,'Biner → heksa','hex',chips(B,4)+'<p>Kelompok 4 bit dari kanan; kurang? tambah 0 di kiri.</p>',tr(dg(B,4).join('')),16)+rc(3,'Biner → oktal','oct',chips(B,3)+'<p>Kelompok 3 bit dari kanan; kurang? tambah 0 di kiri.</p>',tr(dg(B,3).join('')),8)+rc(4,'Biner → desimal','dec',`<p class="eq">${sum(B)}</p><p>Jumlahkan bobot bit yang bernilai 1.</p>`,N,10)};
+el.onclick=e=>{const b=e.target.closest('[data-k]');if(b){k=+b.dataset.k;run()}};
+$('#iv').oninput=run;run()};
+
+const quizKonsep=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'Cara bermain kuis','bin','<p><b>Jenis soal:</b> Acak dari 7 tipe konversi bilangan berbeda.</p><p>• Desimal → biner, heksa, oktal</p><p>• Biner → desimal, heksa, oktal</p><p>• Heksa/oktal → biner → basis lain</p>')}
+${rc(0,'Tips mengerjakan','hex','<p>✓ <b>Jangan hapal!</b> Gunakan metode.</p><p>✓ <b>Desimal → biner:</b> Bagi 2 berulang, baca sisa dari bawah.</p><p>✓ <b>Biner → heksa/oktal:</b> Kelompok 4 bit atau 3 bit, konversi per kelompok.</p><p>✓ <b>Biner → desimal:</b> Jumlahkan bobot bit yang bernilai 1.</p><p><b>Jawaban case-insensitive:</b> 1101, 0x0d, 0xD, 1101 semua diterima!</p>')}
+</div>
+<div class="card"><b>Tujuan kuis</b><p>Latih kecepatan dan ketepatan konversi bilangan. Jangan khawatir jika awalnya lambat—pengulangan membuat cepat!</p></div>`;
+};
+
+const quiz=el=>{
+let sc=0,tt=0,q,dn=0;
+const nm=s=>tr(s.replace(/[\s_]/g,'').toUpperCase());
+el.innerHTML=`<div class="card"><p id="sc" style="font-weight:700;color:var(--bin)"></p><p class="q" id="qt"></p><input id="qa" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Ketik jawaban lalu tekan Enter" aria-label="Jawaban"><div class="row"><button class="btn" id="ck">Periksa</button></div><div id="fb"></div></div>`;
+const sh=()=>{$('#sc').innerHTML=`Skor <b>${sc}</b> dari ${tt} soal`};
+const nq=()=>{
+const n=1+Math.random()*254|0,b=pad(n.toString(2),8),h=n.toString(16).toUpperCase(),o=n.toString(8),sp=(c,z)=>[...c].map(d=>bn(d,z)).join(' ');
+const T=[
+[`Ubah <b>${n}</b> (desimal) ke biner`,b,`${sum(b)}. Tulis 1 pada bobot yang dipakai, 0 pada lainnya.`],
+[`Ubah biner <b>${b}</b> ke heksa`,h,`${grp(b,4).join(' | ')} → ${dg(b,4).join(' ')}`],
+[`Ubah biner <b>${b}</b> ke oktal`,o,`${grp(b,3).join(' | ')} → ${dg(b,3).join(' ')}`],
+[`Ubah biner <b>${b}</b> ke desimal`,''+n,sum(b)],
+[`Ubah heksa <b>${h}</b> ke biner`,b,`Tiap digit 4 bit: ${sp(h,4)}`],
+[`Ubah oktal <b>${o}</b> ke heksa, lewat biner`,h,`${sp(o,3)} → ${b} → ${grp(b,4).join(' | ')} → ${dg(b,4).join(' ')}`],
+[`Ubah heksa <b>${h}</b> ke oktal, lewat biner`,o,`${sp(h,4)} → ${b} → ${grp(b,3).join(' | ')} → ${dg(b,3).join(' ')}`]];
+q=T[Math.random()*T.length|0];dn=0;
+$('#qt').innerHTML=q[0];$('#qa').value='';$('#fb').innerHTML='';$('#ck').textContent='Periksa'};
+const ck=()=>{
+if(dn){nq();return}
+const a=$('#qa').value;if(!a.trim())return;
+const ok=nm(a)==nm(q[1]);dn=1;tt++;sc+=ok;
+$('#fb').innerHTML=(ok?'<p class="ok">Benar!</p>':`<p class="no">Belum tepat. Jawaban: ${q[1]}</p>`)+`<p class="eq">${q[2]}</p>`;
+$('#ck').textContent='Soal berikutnya';sh()};
+$('#ck').onclick=ck;$('#qa').onkeydown=e=>{if(e.key=='Enter')ck()};
+nq();sh()};
+
+/* ===== MINGGU 2: Bilangan negatif & aritmetika ===== */
+const sp4=b=>b.replace(/(.{4})(.{4})/,'$1 $2');
+
+const negKonsep=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'Sign-Magnitude (SM)','dec','<p><b>Cara:</b> MSB = tanda (0=+, 1=−), sisa 7 bit = magnitudo (nilai mutlak).</p><p class="eq">+13 = <code>0 0001101</code></p><p class="eq">−13 = <code>1 0001101</code></p><p class="mu"><b>Masalah:</b> Ada +0 (00000000) dan −0 (10000000), dua cara tulis nol. Rentang: −127…+127.</p>')}
+${rc(0,'1\'s Complement (C1)','oct','<p><b>Cara:</b> Bilangan negatif = inversi (NOT) semua bit dari bilangan positifnya.</p><p class="eq">+13 = <code>0001101</code> → −13 = <code>1110010</code> (balik semua bit)</p><p class="mu"><b>Masalah:</b> Masih ada dua nol. Aritmetika lebih rumit (end-around carry). Rentang: −127…+127.</p>')}
+${rc(0,'2\'s Complement (C2) ⭐ STANDAR','bin','<p><b>Cara:</b> Bilangan negatif = NOT semua bit + 1.</p><p class="eq">+13 = <code>00001101</code></p><p class="eq">NOT semua bit = <code>11110010</code></p><p class="eq">+1 = <code>11110011</code> (−13)</p><p class="mu"><b>Keuntungan:</b> Satu nol, aritmetika sederhana (pakai adder biasa). Rentang: −128…+127. <b>Dipakai CPU/MCU!</b></p>')}
+</div>
+<div class="card"><b>Perbandingan rentang (8-bit)</b><table style="width:100%">
+<tr><th>Skema</th><th style="color:var(--dec)">Min…Max</th><th>Keunikan</th></tr>
+<tr><td>Sign-Magnitude</td><td>−127…+127</td><td>Ada +0 dan −0</td></tr>
+<tr><td>1\'s Complement</td><td>−127…+127</td><td>Perlu end-around carry</td></tr>
+<tr class="hit"><td>2\'s Complement</td><td>−128…+127</td><td>Standar industri, aritmetika mudah</td></tr>
+</table></div>`;
+};
+
+const neg=el=>{
+let n=-13,skm=2;
+const B=x=>(x&255).toString(2).padStart(8,'0');
+el.innerHTML=`<div class="card">
+<div class="rh"><label><b>Bilangan desimal</b><input id="nv" type="number" min="-128" max="127" value="-13"></label></div>
+<input id="ns" type="range" min="-128" max="127" value="-13" aria-label="Geser nilai" style="width:100%;margin-top:8px">
+<p class="mu">Geser atau ketik untuk ubah nilai. Lihat perubahan di ketiga skema.</p>
+</div>
+<div class="card"><b style="color:var(--mu)">Pilih skema yang ingin dipelajari:</b>
+<div class="seg" style="margin-top:10px">${[[0,'Sign-Magnitude','dec'],[1,'1\'s Complement','oct'],[2,'2\'s Complement','bin']].map(([k,l,c])=>`<button data-k="${k}" style="--c:var(--${c})">${l}</button>`).join('')}</div>
+</div>
+<div id="nr"></div>`;
+const row=(t,s,bits,c,info)=>`<div class="card rc" style="--c:var(--${c})"><div class="rh"><b>${t}</b><span class="mu" style="font-size:.85rem">${s}</span></div><div class="bt">${[...bits].map((b,i)=>`<span class="c${i?'':' s'}${b==1?' on':''}">${b}</span>`).join('')}</div><p class="mu">${info}</p></div>`;
+const up=()=>{
+const m=Math.abs(n),c2=B(n),ng=n<0,x=n==-128;
+if(document.activeElement!=$('#nv'))$('#nv').value=n;$('#ns').value=n;
+act(el,skm);
+if(skm===0){
+const sm=x?'--------':(ng?'1':'0')+m.toString(2).padStart(7,'0');
+$('#nr').innerHTML=row('Sign-Magnitude','−127…+127',sm,'dec',`<b>MSB</b> (bit kiri) = tanda: 0 = positif, 1 = negatif. Sisa 7 bit = nilai mutlak (magnitudo).<br>Contoh: ${ng?`−${m} = 1 + ${m.toString(2).padStart(7,'0')} (MSB=1, magnitudo=${m.toString(2).padStart(7,'0')})`:`${n} = 0 + ${n.toString(2).padStart(7,'0')} (MSB=0, magnitudo=${n.toString(2).padStart(7,'0')})`}<br>${x?'⚠️ −128 tidak dapat diwakili dalam SM (maksimal −127).':''}`);
+}else if(skm===1){
+const c1=x?'--------':B(ng?255+n:n);
+$('#nr').innerHTML=row('1\'s Complement','−127…+127',c1,'oct',`Bilangan negatif = inversi (NOT) semua bit dari bilangan positifnya.<br>${ng?`Langkah: ${n} → ambil nilai mutlak ${m} → ${B(m)} → inversi semua bit → <b>${c1}</b>`:`${n} = ${c1} (sudah positif, tidak perlu inversi)`}<br>Catatan: Masih ada dua nol (+0 dan −0). Aritmetika memerlukan koreksi "end-around carry".`);
+}else{
+const pos=B(m),inv=B(~m&255),satu='00000001',hasil=c2;
+const w=[...hasil].map((b,i)=>b==1?(i?2**(7-i):-128):0).filter(Boolean);
+$('#nr').innerHTML=row('2\'s Complement','−128…+127',hasil,'bin',ng?`<b>Langkah konversi −${m}:</b><br>
+1. Ubah ${m} ke biner: <code>${pos}</code><br>
+2. Inversi semua bit (NOT): <code>${inv}</code><br>
+3. Tambah 1: <code>${inv}</code> + <code>${satu}</code> = <code><b>${hasil}</b></code><br>
+<b>Hitung nilai:</b> Bobot MSB = −128, bobot lainnya = positif. ${hasil}<br>Nilai = ${w.join(' + ')} = <b>${n}</b>`:`Positif, sama dengan biner biasa: <code>${hasil}</code>`)
++rc(0,'Kenapa 2\'s Complement?','hex',`<p><b>✓ Satu nol saja</b> (00000000), tidak ada −0.</p><p><b>✓ Aritmetika sederhana:</b> Pengurangan A − B langsung jadi A + (2\'s complement dari B). CPU hanya perlu satu adder.</p><p><b>✓ Deteksi overflow mudah:</b> Cek carry ke MSB XOR carry keluar MSB.</p><p><b>✓ Standar industri</b> yang dipakai di semua CPU dan MCU modern.</p>`);
+}};
+el.onclick=e=>{const x=e.target.closest('[data-k]');if(x)skm=+x.dataset.k;up()};
+$('#nv').onchange=e=>{n=cl(e.target.value);up()};
+$('#ns').oninput=e=>{n=+e.target.value;up()};
+up()};
+
+const arKonsep=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'Penjumlahan (sama dengan biner positif)','bin','<p><b>Langkah:</b> Tambah saja 2 bilangan 2\'s complement, hasil benar otomatis (termasuk negatif).</p><p class="eq">Contoh: 18 + 25 = 43</p><p class="mu">2\'s complement memudahkan karena aritmetika yang sama berlaku untuk positif dan negatif.</p>')}
+${rc(0,'Pengurangan via penjumlahan','oct','<p><b>Cara:</b> A − B = A + (2\'s complement B).</p><p class="eq">Contoh: 18 − 25 = 18 + (−25)</p><p><b>Langkah −25:</b> 25 = 00011001 → NOT = 11100110 → +1 = 11100111</p><p class="mu">Hanya butuh satu "mesin penjumlah" (adder) di CPU, tidak perlu unit pengurangan terpisah!</p>')}
+${rc(0,'Overflow: hasil keluar rentang','dec','<p><b>Kondisi overflow:</b></p><p>✗ Dua positif → hasil negatif (bilangan terlalu besar)</p><p>✗ Dua negatif → hasil positif (bilangan terlalu kecil)</p><p><b>Deteksi cepat:</b> Jika (carry ke MSB) XOR (carry keluar MSB) = 1, terjadi overflow.</p><p class="mu">Contoh: 100 + 60 = 160 seharusnya positif, tapi hasil MSB=1 (dibaca negatif). ⚠️ Overflow!</p>')}
+${rc(0,'Sign extension','hex','<p><b>Perlebar bit dengan aman:</b> Salin MSB (bit tanda) ke kolom baru di sebelah kiri.</p><p class="eq">8-bit 11010110 (−42) → 16-bit 1111111111010110</p><p class="mu">Jangan tambah 0, karena akan ubah tanda bilangan negatif!</p>')}
+</div>`;
+};
+
+const ar=el=>{
+let op='−',show='full';
+const b8=x=>sp4((x&255).toString(2).padStart(8,'0')),sg8=x=>x>127?x-256:x;
+el.innerHTML=`<div class="card">
+<div class="rh"><label><b>A</b><input id="ia" type="number" min="-128" max="127" value="18"></label><div class="seg" style="width:100px;margin-left:10px">${['+','−'].map(o=>`<button data-o="${o}" style="--c:var(--oct)">${o}</button>`).join('')}</div><label><b>B</b><input id="ib" type="number" min="-128" max="127" value="25"></label></div>
+<p class="mu">Pilih contoh, atau ketik bilangan sendiri:</p>
+<div class="gs">${[[18,'−',25],[75,'−',103],[100,'+',60],[-100,'+',-50]].map(p=>`<button class="pl" data-p="${p}">${p[0]} ${p[1]} ${p[2]}</button>`).join('')}</div>
+</div>
+<div id="ao"></div>`;
+const run=()=>{
+const A=cl($('#ia').value),B=cl($('#ib').value),a=A&255,ad=op=='+',bb=ad?B&255:~B&255,c0=ad?0:1;
+const s=a+bb+c0,r=s&255,ci=((a&127)+(bb&127)+c0)>>7,co=s>>8,ov=ci^co,tv=ad?A+B:A-B;
+el.querySelectorAll('[data-o]').forEach(x=>x.classList.toggle('on',x.dataset.o==op));
+const langkah=ad?`<p class="eq"><b>${A}</b> + <b>${B}</b></p><p class="mu">Langsung tambah kedua bilangan 2\'s complement tanpa konversi khusus.</p>`:`<p class="eq"><b>${A}</b> − <b>${B}</b> = <b>${A}</b> + C2(${B})</p><p class="mu"><b>Langkah konversi −${Math.abs(B)}:</b></p><p class="eq">${Math.abs(B)} = ${b8(Math.abs(B))}</p><p class="eq">NOT = ${b8(~Math.abs(B)&255)}</p><p class="eq">+1 = ${b8((~Math.abs(B)&255)+1)}</p>`;
+$('#ao').innerHTML=`<div class="card"><b>${ad?'Penjumlahan':'Pengurangan (lewat penjumlahan)'}</b>${langkah}<p><b style="color:var(--bin)">Hitungan biner:</b></p><pre class="eq tab">  ${b8(a)}   <span style="color:var(--bin)">${A}</span>\n+ ${b8(bb)}   <span style="color:var(--bin)">${ad?B:sg8(bb)}</span>\n<span style="color:var(--mu)">─────────</span>\n= ${b8(r)}   <span style="color:var(--bin)"><b>${sg8(r)}</b></span></pre><p class="mu"><b>Carry:</b> masuk MSB = ${ci}, keluar MSB = ${co} → XOR = <b style="color:${ov?'var(--no)':'var(--ok)'}">${ov}</b></p></div>`
++rc(0,'Cek overflow','oct',ov?`<p class="no"><b>⚠️ OVERFLOW!</b></p><p>Hasil yang benar seharusnya <b>${tv}</b>, tapi rentang 2\'s complement 8-bit hanya −128…+127.</p><p class="mu">Kasus: ${A>0&&B>0?'dua positif besar → hasil seharusnya positif lebih besar, keluar rentang.':`dua negatif besar → hasil seharusnya negatif lebih kecil, keluar rentang.`}</p>`:`<p class="ok"><b>✓ Tidak overflow</b></p><p>Hasil <b>${sg8(r)}</b> masih dalam rentang −128…+127.</p><p class="mu">Tanda hasil benar: ${sg8(r)<0?'MSB=1 (negatif)':'MSB=0 (positif)'}</p>`)};
+el.onclick=e=>{const o=e.target.closest('[data-o]'),p=e.target.closest('[data-p]');
+if(o)op=o.dataset.o;
+if(p){const q=p.dataset.p.split(',');$('#ia').value=q[0];op=q[1];$('#ib').value=q[2]}
+if(o||p)run()};
+$('#ia').oninput=$('#ib').oninput=run;run()};
+
+/* ===== MINGGU 3: Aljabar Boolean ===== */
+const gerbangKonsep=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'AND (·)','bin','<p><b>Aturan:</b> Output 1 hanya jika <b>KEDUA</b> input adalah 1.</p><p class="eq">0 · 0 = 0 | 0 · 1 = 0 | 1 · 0 = 0 | 1 · 1 = 1</p><p class="mu">Analogi: Saklar seri. Lampu hidup hanya jika kedua saklar ON.</p>')}
+${rc(0,'OR (+)','oct','<p><b>Aturan:</b> Output 1 jika <b>MINIMAL SATU</b> input adalah 1.</p><p class="eq">0 + 0 = 0 | 0 + 1 = 1 | 1 + 0 = 1 | 1 + 1 = 1</p><p class="mu">Analogi: Saklar paralel. Lampu hidup jika salah satu saklar ON.</p>')}
+${rc(0,'NOT (′ atau !)','hex','<p><b>Aturan:</b> Output kebalikan input. Satu input saja.</p><p class="eq">NOT 0 = 1 | NOT 1 = 0</p><p class="mu">Analogi: Inverter. Ubah 0 jadi 1, 1 jadi 0.</p>')}
+${rc(0,'NAND & NOR','dec','<p><b>NAND</b> = NOT AND. Output 0 hanya jika kedua input 1.</p><p><b>NOR</b> = NOT OR. Output 1 hanya jika kedua input 0.</p><p class="mu">Kedua gerbang ini "universal": bisa dipakai untuk membangun gerbang lain.</p>')}
+${rc(0,'XOR (⊕) eksklusif OR','mu','<p><b>Aturan:</b> Output 1 jika input <b>BERBEDA</b>.</p><p class="eq">0 ⊕ 0 = 0 | 0 ⊕ 1 = 1 | 1 ⊕ 0 = 1 | 1 ⊕ 1 = 0</p><p class="mu">Guna: Deteksi perbedaan, paritas, half-adder di CPU.</p>')}
+${rc(0,'XNOR (⊙) eksklusif NOR','mu','<p><b>Aturan:</b> Output 1 jika input <b>SAMA</b>.</p><p class="eq">0 ⊙ 0 = 1 | 0 ⊙ 1 = 0 | 1 ⊙ 0 = 0 | 1 ⊙ 1 = 1</p><p class="mu">Kebalikan dari XOR. Guna: Komparator, deteksi kesamaan.</p>')}
+</div>
+<div class="card"><b>Prioritas operasi</b><p><code>NOT > AND > OR</code></p><p class="mu">Contoh: <code>A + B · C′</code> dihitung sebagai <code>A + (B · (C′))</code>, bukan <code>(A + B) · C′</code>.</p></div>`;
+};
+
+const GT=[['AND','A · B',(a,b)=>a&b],['OR','A + B',(a,b)=>a|b],['NOT','A′',a=>1-a],['NAND','(A · B)′',(a,b)=>1-(a&b)],['NOR','(A + B)′',(a,b)=>1-(a|b)],['XOR','A ⊕ B',(a,b)=>a^b],['XNOR','A ⊙ B',(a,b)=>1-(a^b)]];
+const gates=el=>{
+let A=1,B=0;
+el.innerHTML=`<div class="card"><b>Buka/tutup saklar dengan ketukan</b><p class="mu">Semua gerbang menghitung otomatis. Baris tabel yang aktif (sesuai input saat ini) akan bersinar.</p><div class="sw sw2"><button class="bit" data-s="A"><span></span><small>A</small></button><button class="bit" data-s="B"><span></span><small>B</small></button></div></div><div class="g3" id="gg"></div>`;
+const up=()=>{
+el.querySelectorAll('[data-s]').forEach(x=>{const v=x.dataset.s=='A'?A:B;x.setAttribute('aria-pressed',!!v);x.firstChild.textContent=v});
+$('#gg').innerHTML=GT.map(([n,e,f])=>{const u=f.length==1,R=u?[[0],[1]]:[[0,0],[0,1],[1,0],[1,1]],y=f(A,B);
+return `<div class="card"><div class="rh"><b>${n}</b><span class="lamp${y?' on':''}"></span></div><code>${e}</code><table class="tt" style="font-size:.85rem"><tr><th colspan="${u?1:2}">Input</th><th>Output</th></tr>${R.map(r=>`<tr class="${r[0]==A&&(u||r[1]==B)?'hit':''}"><td>${u?r[0]:r[0]}</td>${u?'':' <td>'+r[1]+'</td>'}<td><b>${f(...r)}</b></td></tr>`).join('')}</table></div>`}).join('')};
+el.onclick=e=>{const x=e.target.closest('[data-s]');if(x){x.dataset.s=='A'?A^=1:B^=1;up()}};
+up()};
+
+const bentukKonsep=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'SOP: Sum of Product','bin','<p><b>Struktur:</b> Suku-suku (AND) dijumlahkan (OR).</p><p class="eq">Y = AB + A\'C + BC</p><p><b>Ciri:</b> Setiap suku adalah hasil AND, suku-suku dijumlahkan dengan OR.</p><p class="mu">Guna: Bentuk standar dari tabel kebenaran (baris output 1).</p>')}
+${rc(0,'POS: Product of Sum','oct','<p><b>Struktur:</b> Suku-suku (OR) dikalikan (AND).</p><p class="eq">Y = (A + B) · (A\' + C)</p><p><b>Ciri:</b> Setiap suku adalah hasil OR, suku-suku dikalikan dengan AND.</p><p class="mu">Guna: Bentuk standar dari tabel kebenaran (baris output 0).</p>')}
+</div>
+<div class="card"><b>Konversi SOP ↔ POS</b><p class="mu">SOP dibangun dari baris output 1 (minterm), POS dari baris output 0 (maxterm). Keduanya merepresentasikan fungsi yang sama, hanya bentuk berbeda. Pilih bentuk mana yang lebih sederhana setelah penyederhanaan dengan K-Map.</p></div>`;
+};
+
+const LW=[['Identitas',"A + 0 = A , A · 1 = A",a=>(a|0)==a&&(a&1)==a],['Dominasi',"A + 1 = 1 , A · 0 = 0",a=>(a|1)==1&&(a&0)==0],['Idempoten',"A + A = A , A · A = A",a=>(a|a)==a&&(a&a)==a],['Komplemen',"A + A\' = 1 , A · A\' = 0",a=>(a|1-a)==1&&(a&1-a)==0],['Involusi',"(A\')\'= A",a=>1-(1-a)==a],['Komutatif',"A + B = B + A , AB = BA",(a,b)=>(a|b)==(b|a)&&(a&b)==(b&a)],['Asosiatif',"(A+B)+C = A+(B+C), (AB)C = A(BC)",(a,b,c)=>((a|b)|c)==(a|(b|c))&&((a&b)&c)==(a&(b&c))],['Distributif',"A(B+C)=AB+AC, A+BC=(A+B)(A+C)",(a,b,c)=>(a&(b|c))==((a&b)|(a&c))&&(a|(b&c))==((a|b)&(a|c))],['De Morgan',"(AB)\' = A\'+B\', (A+B)\' = A\'B\'",(a,b)=>(1-(a&b))==((1-a)|(1-b))&&(1-(a|b))==((1-a)&(1-b))],['Absorpsi',"A+AB=A, A(A+B)=A",(a,b)=>(a|(a&b))==a&&(a&(a|b))==a],['Konsensus',"AB+A\'C+BC=AB+A\'C",(a,b,c)=>((a&b)|((1-a)&c)|(b&c))==((a&b)|((1-a)&c))]];
+const hukum=el=>{
+const ok=f=>[0,1].every(a=>[0,1].every(b=>[0,1].every(c=>f(a,b,c))));
+el.innerHTML=`<h2>Hukum dan teorema Boolean</h2><p class="mu">Setiap hukum diuji otomatis pada seluruh 8 kombinasi A, B, C. Hukum-hukum ini dipakai untuk menyederhanakan ekspresi logika sebelum diimplementasikan menjadi rangkaian.</p><div class="g3">${LW.map(l=>`<div class="card rc" style="--c:var(--${ok(l[2])?'ok':'no'})"><div class="rh"><b>${l[0]}</b></div><p class="eq" style="font-size:.88rem">${l[1]}</p><p class="mu" style="font-size:.78rem;margin-top:6px">${ok(l[2])?'✓ Terbukti':'✗ Tidak berlaku'}</p></div>`).join('')}</div>
+<details class="card"><summary>Contoh penyederhanaan dengan hukum</summary><p class="eq">Y = AB + A\'B + AB\'<br>= A(B + B\') + A\'B    ← distributif<br>= A(1) + A\'B              ← komplemen (B+B\'=1)<br>= A + A\'B                  ← identitas (A·1=A)<br>= (A + A\')(A + B)      ← distributif<br>= 1 · (A + B)             ← komplemen (A+A\'=1)<br>= A + B                      ← identitas (1·X=X)</p></details>`;
+};
+
+const sop=el=>{
+let n=3,q=[0,0,0,1,0,1,1,1];const V='ABCD';
+el.innerHTML=`<div class="card"><div class="rh">${sg([[2,'2 variabel'],[3,'3 variabel'],[4,'4 variabel']],3)}<div class="gs"><button class="pl" data-z="x">XOR</button><button class="pl" data-z="m">Mayoritas</button><button class="pl" data-z="r">Acak</button><button class="pl" data-z="0">Nol semua</button></div></div><p class="mu">Ketuk kolom Q untuk membalik keluaran 0 dan 1. SOP dibangun dari baris output 1, POS dari baris output 0.</p></div><div class="g2"><div class="card" id="tb"></div><div id="sr"></div></div>`;
+const up=()=>{
+act(el,n);const N=1<<n,bs=i=>i.toString(2).padStart(n,'0'),m=[],z=[];
+q=q.slice(0,N);while(q.length<N)q.push(0);
+q.forEach((v,i)=>(v?m:z).push(i));
+$('#tb').innerHTML=`<table class="tt big"><tr>${[...V.slice(0,n)].map(v=>`<th>${v}</th>`).join('')}<th>Q</th></tr>${q.map((v,i)=>`<tr class="${v?'hit':''}">${[...bs(i)].map(b=>`<td>${b}</td>`).join('')}<td><button class="qb" data-i="${i}">${v}</button></td></tr>`).join('')}</table>`;
+const L=(i,f)=>[...bs(i)].map((b,j)=>f(V[j],b==1));
+$('#sr').innerHTML=rc(0,'Minterm: output 1','hex',`<p class="eq">Σm(${m.join(', ')||'-'})</p><p class="eq">${m.length?m.map(i=>L(i,(v,b)=>v+(b?'':"'")).join('')).join(' + '):'0'}</p><p class="mu">Variabel tanpa komplemen dibaca 1, dengan komplemen dibaca 0.</p>`)+rc(0,'Maxterm: output 0','oct',`<p class="eq">ΠM(${z.join(', ')||'-'})</p><p class="eq">${z.length?z.map(i=>'('+L(i,(v,b)=>v+(b?"'":'')).join(' + ')+')').join(''):'1'}</p><p class="mu">Variabel tanpa komplemen dibaca 0, dengan komplemen dibaca 1.</p>`)};
+el.onclick=e=>{const k=e.target.closest('[data-k]'),i=e.target.closest('[data-i]'),z=e.target.closest('[data-z]');
+if(k)n=+k.dataset.k;
+if(i)q[i.dataset.i]^=1;
+if(z){const t=z.dataset.z;if(t=='x'){n=2;q=[0,1,1,0]}else if(t=='m'){n=3;q=[0,0,0,1,0,1,1,1]}else q=Array.from({length:1<<n},()=>t=='r'?Math.random()<.5|0:0)}
+up()};up()};
+
+/* ===== MINGGU 4: Karnaugh Map ===== */
+const kkonsep=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'Apa itu K-Map?','bin','<p><b>Peta Karnaugh</b> adalah tabel khusus untuk menyederhanakan fungsi Boolean.</p><p>Lebih intuitif dan cepat dibanding metode aljabar Boolean manual, terutama untuk 3–4 variabel.</p>')}
+${rc(0,'Kode Gray: kunci K-Map','hex','<p><b>Sel bersebelahan hanya boleh beda 1 variabel</b> saja (Hamming distance = 1).</p><p>Urutan kolom: <code>00, 01, 11, 10</code> (bukan 00, 01, 10, 11).</p><p>Ini memastikan logika penyederhanaan dengan pengelompokan berfungsi benar.</p>')}
+${rc(0,'Aturan pengelompokan','oct','<p><b>Kelompokkan</b> sel bernilai 1 (atau X) dalam bentuk: 1, 2, 4, 8, atau 16 sel.</p><p><b>Bentuk:</b> Persegi atau persegi panjang (boleh membungkus tepi, seperti torus).</p><p><b>Strategi:</b> Kelompok <b>sebesar mungkin</b>. Variabel yang berubah di dalam kelompok <b>dihilangkan</b> dari hasil.</p>')}
+${rc(0,'Don\'t care (X)','dec','<p><b>Kondisi yang tidak pernah terjadi</b> atau tidak penting hasilnya. Pakai X di peta.</p><p>Pakai X sebagai 1 (masukkan kelompok) hanya jika membuat kelompok lebih besar.</p><p>Jangan pernah kelompokkan X saja, harus ada minimal satu 1 di setiap kelompok.</p>')}
+</div>
+<div class="g2">
+<div class="card"><b>Contoh K-Map 2 variabel</b><p class="mu"><b>Fungsi:</b> Q = AB + A\'B + AB\'</p><p class="mu"><b>Peta:</b></p><table style="width:100%;margin-top:8px"><tr><th></th><th>B=0</th><th>B=1</th></tr><tr><th>A=0</th><td>0</td><td class="hit">1</td></tr><tr><th>A=1</th><td class="hit">1</td><td class="hit">1</td></tr></table><p class="mu"><b>Hasil:</b> Kelompokkan 3 sel (1 saja, tapi jika digabung jadi A + B lebih pendek).</p><p class="eq"><b>Q = A + B</b> (simpel!)</p></div>
+<div class="card"><b>Soal cerita: alarm gedung</b><p class="mu"><b>Kondisi:</b></p><p>• Pintu terbuka (A=1) DAN ada gerak (C=1) → alarm ON</p><p>• Jendela terbuka (B=1) DAN ada gerak (C=1) → alarm ON</p><p>• Ada asap (D=1) → alarm ON (apapun kondisi lain)</p><p class="eq" style="margin-top:12px"><b>Hasil K-Map:</b> Q = D + A·C + B·C</p><p class="mu">Dibaca: Alarm hidup jika ada asap, ATAU pintu+gerak, ATAU jendela+gerak.</p></div>
+</div>`;
+};
+
+const kmKonsep=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'K-Map 2 variabel','bin','<p>Peta 2×2 untuk kombinasi A dan B. Mudah dipahami, pakai untuk latihan dasar.</p><p class="mu"><b>Gaya:</b> A naik ke bawah, B ke kanan (kode Gray).</p>')}
+${rc(0,'K-Map 3 variabel','oct','<p>Peta 2×4 untuk kombinasi A, B, C. Tepi kiri-kanan dihitung bersebelahan (membungkus).</p><p class="mu">Jangan lupa: sel di kolom paling kiri dan paling kanan saling bersebelahan!</p>')}
+${rc(0,'K-Map 4 variabel','hex','<p>Peta 4×4 untuk kombinasi A, B, C, D. Paling sering dipakai di praktik.</p><p class="mu">Tepi atas-bawah dan kiri-kanan sama-sama membungkus. Sudut juga saling bersebelahan!</p>')}
+${rc(0,'Strategi kelompok','dec','<p><b>Cari kelompok terbesar dulu.</b> Misal, jika ada 4 sel 1 bersebelahan, kelompokkan jadi satu, bukan dua kelompok 2 sel.</p><p><b>Kelompok boleh tumpang tindih.</b> Satu sel 1 bisa jadi bagian dari 2+ kelompok berbeda; itu OK dan sering optimal.</p>')}
+</div>`;
+};
+
+const mini=(n,on,dc)=>{
+const N=1<<n,all=[...on,...dc];let P=[];
+for(let m=0;m<N;m++)for(let v=0;v<N;v++){if(v&m)continue;
+const cells=[];for(let i=0;i<N;i++)if((i&~m)==v)cells.push(i);
+if(cells.every(c=>all.includes(c))&&cells.some(c=>on.includes(c)))P.push({m,v,cells})}
+P=P.filter(p=>!P.some(q=>q!==p&&q.cells.length>p.cells.length&&p.cells.every(c=>q.cells.includes(c))));
+let left=on.slice(),sel=[];
+while(left.length){let k=null;
+for(const c of left){const d=P.filter(p=>p.cells.includes(c));if(d.length==1){k=d[0];break}}
+if(!k){const cv=p=>p.cells.filter(c=>left.includes(c)).length;k=P.filter(p=>!sel.includes(p)).sort((a,b)=>cv(b)-cv(a))[0]}
+sel.push(k);left=left.filter(c=>!k.cells.includes(c))}
+return sel};
+const kmap=el=>{
+let n=4,st=Array(16).fill(0);
+const V='ABCD',g=k=>k^(k>>1),col=i=>`hsl(${(i*67+170)%360} 65% 48%)`;
+const PZ=[['2 var: A + B',2,[1,2,3]],['3 var: A',3,[4,5,6,7]],['4 var: BD',4,[5,7,13,15]],['Alarm gedung',4,[1,3,5,6,7,9,10,11,13,14,15]],['Gerbang parkir',4,[1,3,5,7,9,11,12,13,15]],["Don't care (X)",4,[1,3,7,11,15],[0,2,5]]];
+el.innerHTML=`<div class="card"><div class="rh">${sg([[2,'2 variabel'],[3,'3 variabel'],[4,'4 variabel']],4)}<button class="pl" data-z="c">Kosongkan</button></div><div class="gs" style="margin-top:10px">${PZ.map((p,i)=>`<button class="pl" data-z="${i}">${p[0]}</button>`).join('')}</div></div><div class="g2"><div class="card"><div id="km"></div><p class="mu">Ketuk sel: 0 → 1 → X (don't care). Titik warna menandai kelompok.</p></div><div class="card" id="kr"></div></div>`;
+const up=()=>{
+act(el,n);const N=1<<n,r=n>>1,c=n-r,R=1<<r,C=1<<c,on=[],dc=[];
+for(let m=0;m<N;m++){st[m]==1&&on.push(m);st[m]==2&&dc.push(m)}
+const sel=mini(n,on,dc),hd=(k,b)=>g(k).toString(2).padStart(b,'0');
+let h=`<div class="km" style="grid-template-columns:auto repeat(${C},1fr)"><div class="kh">${V.slice(0,r)}\\${V.slice(r,n)}</div>`;
+for(let j=0;j<C;j++)h+=`<div class="kh">${hd(j,c)}</div>`;
+for(let i=0;i<R;i++){h+=`<div class="kh">${hd(i,r)}</div>`;for(let j=0;j<C;j++){const m=(g(i)<<c)|g(j);
+h+=`<button class="kc v${st[m]}" data-m="${m}" aria-label="m${m} bernilai ${'01X'[st[m]]}"><small>m${m}</small>${'01X'[st[m]]}<span class="dots">${sel.map((p,k)=>p.cells.includes(m)?`<i style="background:${col(k)}"></i>`:'').join('')}</span></button>`}}
+$('#km').innerHTML=h+'</div>';
+const term=p=>{let s='';for(let j=0;j<n;j++){const b=1<<(n-1-j);if(!(p.m&b))s+=V[j]+(p.v&b?'':"'")}return s||'1'};
+$('#kr').innerHTML=`<b>Hasil minimum (SOP)</b><p class="k2">${sel.length?sel.map((p,k)=>`<span style="color:${col(k)}">${term(p)}</span>`).join(' + '):'0'}</p>`+sel.map((p,k)=>`<p><i class="sq" style="background:${col(k)}"></i> <b>${term(p)}</b>: kelompok ${p.cells.length} sel (m${p.cells.join(', m')})</p>`).join('')+`<p class="mu">Σm(${on.join(', ')||'-'})${dc.length?' + d('+dc.join(', ')+')':''}. Variabel yang berubah dalam kelompok dihilangkan.</p>`};
+el.onclick=e=>{const k=e.target.closest('[data-k]'),m=e.target.closest('[data-m]'),z=e.target.closest('[data-z]');
+if(k)n=+k.dataset.k;
+if(m)st[m.dataset.m]=(st[m.dataset.m]+1)%3;
+if(z){st=Array(16).fill(0);if(z.dataset.z!='c'){const p=PZ[z.dataset.z];n=p[1];p[2].forEach(i=>st[i]=1);(p[3]||[]).forEach(i=>st[i]=2)}}
+up()};up()};
+
+/* ===== MINGGU 5: Adder & Subtractor ===== */
+const addKonsep=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'Half Adder (HA)','bin','<p>Menjumlahkan <b>2 bit</b>: A dan B.</p><p class="eq">S = A ⊕ B<br>C = A · B</p><p class="mu">Tidak punya input carry-in, jadi tidak cukup untuk penjumlahan multi-bit.</p>')}
+${rc(0,'Full Adder (FA)','dec','<p>Menjumlahkan <b>3 bit</b>: A, B, dan Cin.</p><p class="eq">S = A ⊕ B ⊕ Cin<br>Cout = A·B + Cin·(A ⊕ B)</p><p class="mu">Cout satu bit menjadi Cin bit berikutnya.</p>')}
+${rc(0,'Half Subtractor','oct','<p>Mengurangi B dari A (2 bit).</p><p class="eq">D = A ⊕ B<br>Borrow = A\'·B</p>')}
+${rc(0,'Full Subtractor','hex','<p>Mengurangi B dan Bin dari A.</p><p class="eq">D = A ⊕ B ⊕ Bin<br>Bout = A\'·B + Bin·(A ⊙ B)</p>')}
+</div>
+<div class="g2"><div class="card"><b>Tabel Full Adder</b><table class="tt"><tr><th>A</th><th>B</th><th>Cin</th><th>S</th><th>Cout</th></tr>${Array.from({length:8},(_,i)=>{const a=i>>2,b=i>>1&1,c=i&1,t=a+b+c;return `<tr><td>${a}</td><td>${b}</td><td>${c}</td><td><b>${t&1}</b></td><td><b>${t>>1}</b></td></tr>`}).join('')}</table></div>
+<div class="card"><b>Tabel Full Subtractor</b><table class="tt"><tr><th>A</th><th>B</th><th>Bin</th><th>D</th><th>Bout</th></tr>${Array.from({length:8},(_,i)=>{const a=i>>2,b=i>>1&1,c=i&1,t=a-b-c;return `<tr><td>${a}</td><td>${b}</td><td>${c}</td><td><b>${t&1}</b></td><td><b>${t<0?1:0}</b></td></tr>`}).join('')}</table></div></div>`};
+
+const adsub=el=>{
+let a=9,b=5,m=1;
+el.innerHTML=`<div class="card">${sg([[0,'Add (M=0)'],[1,'Sub (M=1)','oct']],m)}
+<label style="margin-top:12px">A <input type="number" id="ia" min="0" max="15" value="${a}"></label>
+<label style="margin-top:8px">B <input type="number" id="ib" min="0" max="15" value="${b}"></label>
+<p class="mu">Isi 0–15 (4 bit). Mode Sub: Bᵢ di-XOR dengan M dan Cin awal = M, sehingga A + B' + 1 = A − B.</p></div><div id="ao"></div>`;
+const cp=x=>Math.max(0,Math.min(15,Math.round(+x)||0));
+const up=()=>{act(el,m);
+const A=a.toString(2).padStart(4,'0'),B=b.toString(2).padStart(4,'0');let c=m,s='',rows='';
+for(let i=0;i<4;i++){const x=+A[3-i],y=+B[3-i],yb=y^m,t=x+yb+c,sm=t&1,co=t>>1;
+rows+=`<tr><td>${i}</td><td>${x}</td><td>${y}</td><td>${yb}</td><td>${c}</td><td><b>${sm}</b></td><td>${co}</td></tr>`;s=sm+s;c=co}
+const res=m?`${s}₂ = <b>${parseInt(s,2)}</b> ${c?'(Cout=1: tidak ada borrow)':`(Cout=0: ada borrow, hasil negatif = ${a-b} dalam 2's complement)`}`:`${c}${s}₂ = <b>${a+b}</b>`;
+$('#ao').innerHTML=`<div class="card"><p class="eq">A = <b>${A}</b> (${a}) &nbsp; B = <b>${B}</b> (${b})</p><div class="tab"><table class="tt"><tr><th>Bit</th><th>Aᵢ</th><th>Bᵢ</th><th>Bᵢ⊕M</th><th>Cin</th><th>Sᵢ</th><th>Cout</th></tr>${rows}</table></div><p class="q">${m?'A − B':'A + B'} = ${res}</p></div>`};
+el.onclick=e=>{const k=e.target.closest('[data-k]');if(k){m=+k.dataset.k;up()}};
+el.oninput=e=>{if(e.target.id=='ia')a=cp(e.target.value);if(e.target.id=='ib')b=cp(e.target.value);up()};
+up()};
+
+const rcacla=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'Ripple Carry Adder (RCA)','oct','<p>Rantai Full Adder: Cout tiap bit masuk ke Cin bit berikutnya.</p><p class="mu"><b>Kelemahan:</b> carry harus merambat bit demi bit, sehingga delay naik seiring jumlah bit.</p>')}
+${rc(0,'Carry Lookahead Adder (CLA)','bin','<p>Menghitung carry tiap bit secara paralel memakai Generate (G) dan Propagate (P).</p><p class="eq">G = A·B<br>P = A ⊕ B<br>C₁ = G₀ + P₀C₀<br>C₂ = G₁ + P₁G₀ + P₁P₀C₀<br>C₃ = G₂ + P₂G₁ + P₂P₁G₀ + P₂P₁P₀C₀</p>')}
+</div>
+<div class="g2"><div class="card"><b>Generate dan Propagate</b><table class="tt"><tr><th>A</th><th>B</th><th>G</th><th>P</th></tr>${[[0,0],[0,1],[1,0],[1,1]].map(([a,b])=>`<tr><td>${a}</td><td>${b}</td><td>${a&b}</td><td>${a^b}</td></tr>`).join('')}</table></div>
+<div class="card"><b>Perbandingan</b><table class="tt" style="font-size:.82rem"><tr><th>Aspek</th><th>RCA</th><th>CLA</th></tr><tr><td>Desain</td><td>Sederhana (serial)</td><td>Kompleks (paralel)</td></tr><tr><td>Delay</td><td>Tinggi</td><td>Rendah</td></tr><tr><td>Gerbang</td><td>Hemat</td><td>Lebih banyak</td></tr><tr><td>Skala</td><td>Kecil</td><td>Besar</td></tr></table></div></div>`};
+
+/* ===== MINGGU 6: Multilevel NAND/NOR & MUX ===== */
+const uniKonsep=el=>{
+el.innerHTML=`<div class="card"><p>NAND dan NOR disebut <b>gerbang universal</b>: semua fungsi logika (AND, OR, NOT, XOR, dst.) bisa dibentuk hanya dari salah satunya.</p></div><div class="g2">
+${rc(0,'Dari NAND saja','bin','<p class="eq">NOT: A\' = (A·A)\'<br>AND: A·B = ((A·B)\')\'<br>OR: A+B = (A\'·B\')\'</p>')}
+${rc(0,'Dari NOR saja','oct','<p class="eq">NOT: A\' = (A+A)\'<br>OR: A+B = ((A+B)\')\'<br>AND: A·B = (A\'+B\')\'</p>')}
+${rc(1,'SOP dengan Multilevel NAND','dec','<p>1. Tulis fungsi dalam bentuk SOP.</p><p>2. Ganti gerbang AND (level 1) dan OR (level 2) dengan NAND.</p><p>3. Dua inversi saling meniadakan.</p><p class="eq">Y = AB + CD = ((AB)\'·(CD)\')\'</p>')}
+${rc(2,'POS dengan Multilevel NOR','hex','<p>1. Tulis fungsi dalam bentuk POS.</p><p>2. Ganti gerbang OR (level 1) dan AND (level 2) dengan NOR.</p><p class="eq">Y = (A+B)(C+D) = ((A+B)\'+(C+D)\')\'</p>')}
+</div>`};
+
+const uni=el=>{
+let A=1,B=0;const nd=(x,y)=>1-(x&y),nr=(x,y)=>1-(x|y);
+el.innerHTML=`<div class="card"><b>Pembuktian: bangun gerbang dasar dari NAND / NOR</b><div class="sw sw2"><button class="bit" data-s="A"><span></span><small>A</small></button><button class="bit" data-s="B"><span></span><small>B</small></button></div><div class="tab" id="uo"></div></div>`;
+const up=()=>{el.querySelectorAll('[data-s]').forEach(x=>{const v=x.dataset.s=='A'?A:B;x.setAttribute('aria-pressed',!!v);x.firstChild.textContent=v});
+const R=[['NOT A',nd(A,A),nr(A,A),1-A],['A AND B',nd(nd(A,B),nd(A,B)),nr(nr(A,A),nr(B,B)),A&B],['A OR B',nd(nd(A,A),nd(B,B)),nr(nr(A,B),nr(A,B)),A|B]];
+$('#uo').innerHTML=`<table class="tt" style="width:100%"><tr><th>Fungsi</th><th>Hanya NAND</th><th>Hanya NOR</th><th>Asli</th><th>Cocok?</th></tr>${R.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td><td class="${r[1]==r[3]&&r[2]==r[3]?'ok':'no'}">${r[1]==r[3]&&r[2]==r[3]?'✓':'✗'}</td></tr>`).join('')}</table>`};
+el.onclick=e=>{const x=e.target.closest('[data-s]');if(x){x.dataset.s=='A'?A^=1:B^=1;up()}};up()};
+
+const mux=el=>{
+let D=[1,0,1,1],S=2;
+el.innerHTML=`<div class="g2">${rc(0,'MUX sebagai Data Selector','bin','<p>MUX memilih <b>satu dari 2ⁿ input data</b> berdasarkan n saluran select, lalu meneruskannya ke output Y.</p><p class="mu">Dipakai di CPU, pemilihan memori, komunikasi data, dan bisa menggantikan gerbang logika untuk fungsi Boolean.</p>')}
+<div class="card"><b>4:1 MUX</b><p class="eq">Y = S₁'S₀'D₀ + S₁'S₀D₁ + S₁S₀'D₂ + S₁S₀D₃</p><div class="sw" style="grid-template-columns:repeat(4,1fr);max-width:320px">${D.map((_,i)=>`<button class="bit" data-d="${i}"><span></span><small>D${i}</small></button>`).join('')}</div><p class="mu" style="margin-top:12px">Select S₁S₀:</p>${sg([[0,'00'],[1,'01'],[2,'10'],[3,'11']],S)}<div id="mo"></div></div></div>`;
+const up=()=>{act(el,S);el.querySelectorAll('[data-d]').forEach(x=>{const v=D[x.dataset.d];x.setAttribute('aria-pressed',!!v);x.firstChild.textContent=v});
+$('#mo').innerHTML=`<p class="q" style="display:flex;align-items:center;gap:10px">S₁S₀ = ${S.toString(2).padStart(2,'0')} → Y = D${S} = <b>${D[S]}</b><span class="lamp${D[S]?' on':''}"></span></p>`};
+el.onclick=e=>{const k=e.target.closest('[data-k]'),d=e.target.closest('[data-d]');if(k)S=+k.dataset.k;if(d)D[d.dataset.d]^=1;up()};up()};
+
+/* ===== MINGGU 7: Decoder, Encoder, BCD 7-Segment ===== */
+const decKonsep=el=>{
+el.innerHTML=`<div class="g2">
+${rc(0,'Decoder','bin','<p>Input <b>n bit</b> → <b>2ⁿ output</b>. Hanya satu output aktif untuk tiap kombinasi input.</p><p class="eq">Y₀ = A₁\'A₀\' , Y₁ = A₁\'A₀<br>Y₂ = A₁A₀\' , Y₃ = A₁A₀</p><p class="mu">IC umum: 74LS138 (3-to-8). Pin Enable membuat decoder bisa dimatikan/diperluas.</p>')}
+${rc(0,'Encoder','dec','<p>Input <b>2ⁿ jalur</b> → <b>n bit</b> kode biner dari input yang aktif.</p><p class="eq">A₁ = D₂ + D₃<br>A₀ = D₁ + D₃</p><p class="mu">Jenis: Binary, Priority (74LS148), Decimal-to-BCD (keypad).</p>')}
+</div><div class="card"><b>Aplikasi Decoder</b><p>• <b>Address decoder</b> pada memori (memilih chip/alamat)</p><p>• <b>Channel selector</b> / data routing</p><p>• <b>Kunci digital:</b> input 101 hanya mengaktifkan Y₅ → membuka kunci</p><p>• <b>Peripheral enable</b> mikrokontroler (ADC, UART, Timer)</p></div>
+<div class="card"><table class="tt" style="width:100%"><tr><th>Aspek</th><th>Decoder</th><th>Encoder</th></tr><tr><td>Fungsi</td><td>Biner → aktivasi tunggal</td><td>Aktivasi tunggal → biner</td></tr><tr><td>Input</td><td>n bit</td><td>2ⁿ jalur</td></tr><tr><td>Output</td><td>2ⁿ jalur</td><td>n bit</td></tr><tr><td>Contoh</td><td>3-to-8 (74LS138)</td><td>8-to-3 (74LS148)</td></tr></table></div>`};
+
+const dec=el=>{
+let v=[1,0,1],E=1;
+el.innerHTML=`<div class="card"><b>Decoder 3-to-8 dengan Enable</b><p class="mu">Ubah A₂A₁A₀ dan E. Jika E = 0, semua output mati.</p><div class="sw" style="grid-template-columns:repeat(4,70px)">${['A2','A1','A0','E'].map((n,i)=>`<button class="bit" data-i="${i}"><span></span><small>${n}</small></button>`).join('')}</div><div id="do"></div></div>`;
+const up=()=>{el.querySelectorAll('[data-i]').forEach(x=>{const t=+x.dataset.i,b=t<3?v[t]:E;x.setAttribute('aria-pressed',!!b);x.firstChild.textContent=b});
+const n=v[0]*4+v[1]*2+v[2];
+$('#do').innerHTML=`<div class="gs">${Array.from({length:8},(_,i)=>{const on=E&&i==n;return `<div class="g" style="--c:var(--${on?'ok':'ln'})"><span class="lamp${on?' on':''}"></span><b style="font-size:.95rem;color:var(--ink)">Y${i}</b></div>`}).join('')}</div><p class="eq">Input ${v.join('')}₂ = ${n} → ${E?`hanya <b>Y${n}</b> aktif`:'E = 0: semua output 0'}</p>`};
+el.onclick=e=>{const x=e.target.closest('[data-i]');if(x){const t=+x.dataset.i;t<3?v[t]^=1:E^=1;up()}};up()};
+
+const enc=el=>{
+let D=Array(8).fill(0);D[2]=1;D[5]=1;
+el.innerHTML=`<div class="card"><b>Priority Encoder 8-to-3</b><p class="mu">Aktifkan beberapa input sekaligus. Yang dikodekan hanya input bernomor tertinggi.</p><div class="sw" style="grid-template-columns:repeat(8,1fr)">${D.map((_,i)=>`<button class="bit" data-d="${i}"><span></span><small>D${i}</small></button>`).join('')}</div><div id="eo"></div></div>`;
+const up=()=>{el.querySelectorAll('[data-d]').forEach(x=>{const v=D[x.dataset.d];x.setAttribute('aria-pressed',!!v);x.firstChild.textContent=v});
+const h=D.lastIndexOf(1),on=D.map((x,i)=>x?'D'+i:'').filter(Boolean);
+$('#eo').innerHTML=h<0?'<p class="eq">Tidak ada input aktif → output tidak valid (V = 0)</p>':`<p class="eq">Aktif: ${on.join(', ')} → prioritas <b>D${h}</b><br>Y₂Y₁Y₀ = <b>${h.toString(2).padStart(3,'0')}</b></p>`};
+el.onclick=e=>{const d=e.target.closest('[data-d]');if(d){D[d.dataset.d]^=1;up()}};up()};
+
+const SEG=['1111110','0110000','1101101','1111001','0110011','1011011','1011111','1110000','1111111','1111011'];
+const sevenseg=el=>{
+let n=8,ca=0;
+const R=[[15,6,50,10],[66,18,10,50],[66,82,10,50],[15,134,50,10],[4,82,10,50],[4,18,10,50],[15,70,50,10]];
+el.innerHTML=`<div class="card"><p class="mu">7-segment terdiri dari 7 LED (a–g). Common Cathode (CC): segmen menyala saat output HIGH. Common Anode (CA): segmen menyala saat output LOW.</p>
+<div class="gs">${SEG.map((_,i)=>`<button class="pl" data-n="${i}">${i}</button>`).join('')}</div>
+<div style="max-width:360px;margin-top:10px">${sg([[0,'Common Cathode'],[1,'Common Anode','oct']],ca)}</div>
+<div class="g2" style="margin-top:14px"><svg id="sv" viewBox="0 0 80 150" style="width:130px" role="img" aria-label="Tampilan 7-segment"></svg><div id="so"></div></div></div>
+<div class="card"><b>Tabel BCD → segmen (CC)</b><div class="tab"><table class="tt" id="st" style="width:100%"><tr><th>Angka</th><th>ABCD</th><th>abcdefg</th></tr>${SEG.map((s,i)=>`<tr data-r="${i}"><td>${i}</td><td>${i.toString(2).padStart(4,'0')}</td><td>${s}</td></tr>`).join('')}</table></div></div>`;
+const up=()=>{act(el,ca);const s=SEG[n],o=[...s].map(x=>ca?1-x:+x).join('');
+$('#sv').innerHTML=R.map((r,i)=>`<rect x="${r[0]}" y="${r[1]}" width="${r[2]}" height="${r[3]}" rx="4" style="fill:${s[i]=='1'?'var(--bin)':'var(--ln)'}"/>`).join('');
+$('#so').innerHTML=`<p class="eq">BCD ABCD = <b>${n.toString(2).padStart(4,'0')}</b> (${n})<br>Output a–g = <b>${o}</b></p><p class="mu">${ca?'CA: segmen menyala jika output LOW (0), jadi pola CC dibalik.':'CC: segmen menyala jika output HIGH (1).'}</p>`;
+el.querySelectorAll('[data-r]').forEach(x=>x.classList.toggle('hit',x.dataset.r==n))};
+el.onclick=e=>{const k=e.target.closest('[data-k]'),d=e.target.closest('[data-n]');if(k)ca=+k.dataset.k;if(d)n=+d.dataset.n;up()};up()};
+
+/* ===== PUSTAKA SIMBOL GERBANG & MESIN RANGKAIAN (ANSI/IEEE) ===== */
+const OR_P='M0 0Q28 0 50 20Q28 40 0 40Q12 20 0 0Z';
+const GP={AND:['M0 0H25A20 20 0 0 1 25 40H0Z',45,0],OR:[OR_P,50,3],XOR:[OR_P,50,-2],NOT:['M0 2L36 20L0 38Z',36,0]};
+const GF={AND:(a,b)=>a&b,OR:(a,b)=>a|b,XOR:(a,b)=>a^b,NOT:a=>1-a,NAND:(a,b)=>1-(a&b),NOR:(a,b)=>1-(a|b),XNOR:(a,b)=>1-(a^b)};
+const BB=['NAND','NOR','XNOR','NOT'],bs=t=>({NAND:'AND',NOR:'OR',XNOR:'XOR'})[t]||t;
+const ev=(S,v)=>{const n={...v};S.g.forEach(g=>n[g[4]]=GF[g[0]](...g[3].map(k=>n[k])));return n};
+const ckt=(S,v)=>{
+const n=v?ev(S,v):{},src={},D={},gw=t=>GP[bs(t)][1]+(BB.includes(t)?8:0);
+const py=g=>g[3].length==1?[g[2]+20]:[g[2]+10,g[2]+30],px=g=>g[1]+GP[bs(g[0])][2];
+S.i.forEach(i=>src[i[0]]=[52,i[1],i[2]]);
+S.g.forEach(g=>src[g[4]]=[g[1]+gw(g[0]),g[2]+20,g[5]]);
+S.g.forEach(g=>g[3].forEach((k,j)=>(D[k]=D[k]||[]).push([px(g),py(g)[j]])));
+const h=k=>v&&n[k]?' h':'';let w='',d='';
+for(const k in D){const[sx,sy,b0]=src[k],bx=b0||Math.min(...D[k].map(p=>p[0]))-14;
+D[k].forEach(([dx,dy])=>{w+=`<path class="w${h(k)}" d="M${sx} ${sy}H${bx}V${dy}H${dx}"/>`;if(D[k].length>1)d+=`<circle cx="${bx}" cy="${dy}" r="3" class="dt${h(k)}"/>`})}
+const G=S.g.map(g=>{const t=g[0],b=bs(t),W=GP[b][1];return `<g transform="translate(${g[1]} ${g[2]})"><path class="gb${v&&n[g[4]]?' on':''}" d="${GP[b][0]}"/>${b=='XOR'?'<path class="gb nf" d="M-7 0Q5 20-7 40"/>':''}${BB.includes(t)?`<circle class="gb" cx="${W+4}" cy="20" r="4"/>`:''}</g>`}).join('');
+const L=S.i.map(i=>`<text class="gl" x="46" y="${i[1]+4}" text-anchor="end">${i[0]}${v?'='+v[i[0]]:''}</text>`).join('');
+const O=S.o.map(([l,k])=>{const[sx,sy]=src[k];return `<path class="w${h(k)}" d="M${sx} ${sy}H${sx+24}"/><circle cx="${sx+32}" cy="${sy}" r="7" style="fill:${v&&n[k]?'#f7c948':'var(--ln)'};stroke:var(--mu)"/><text class="gl" x="${sx+45}" y="${sy+4}">${l}${v?'='+n[k]:''}</text>`}).join('');
+return `<svg class="ck" viewBox="0 0 ${S.w} ${S.h}" role="img" aria-label="Rangkaian gerbang logika">${w}${d}${G}${L}${O}</svg>`};
+const one=t=>({w:250,h:70,i:t=='NOT'?[['A',35]]:[['A',25],['B',45]],g:[[t,110,15,t=='NOT'?['A']:['A','B'],'Y']],o:[['Y','Y']]});
+const TT=(S,N,outs,v)=>`<div class="tab"><table class="tt"><tr>${N.concat(outs).map(x=>`<th>${x}</th>`).join('')}</tr>${Array.from({length:1<<N.length},(_,i)=>{const r=N.map((_,j)=>i>>(N.length-1-j)&1),o=ev(S,Object.fromEntries(N.map((n,j)=>[n,r[j]])));return `<tr class="${v&&N.every((n,j)=>v[n]==r[j])?'hit':''}">${r.map(x=>`<td>${x}</td>`).join('')}${outs.map(k=>`<td><b>${o[k]}</b></td>`).join('')}</tr>`}).join('')}</table></div>`;
+const mount=(box,N,S,extra)=>{const v=Object.fromEntries(N.map(n=>[n,0]));
+box.innerHTML=`<div class="sw" style="grid-template-columns:repeat(${N.length},64px)">${N.map(n=>`<button class="bit" data-s="${n}"><span></span><small>${n}</small></button>`).join('')}</div><div class="cvs"></div><div class="exs"></div>`;
+const up=()=>{box.querySelectorAll('[data-s]').forEach(x=>{x.setAttribute('aria-pressed',!!v[x.dataset.s]);x.firstChild.textContent=v[x.dataset.s]});
+box.querySelector('.cvs').innerHTML=ckt(S,v);box.querySelector('.exs').innerHTML=extra?extra(v,ev(S,v)):''};
+box.addEventListener('click',e=>{const x=e.target.closest('[data-s]');if(x&&box.contains(x)){v[x.dataset.s]^=1;up()}});up()};
+
+/* ===== MINGGU 3: konsep gerbang (lengkap) ===== */
+const GD=[
+['AND','A · B','bin','Output 1 <b>hanya jika semua input 1</b>. Cukup satu input 0, output langsung 0.','Dua saklar <b>seri</b>: arus hanya mengalir bila keduanya tertutup.','74LS08 (4 gerbang AND, 2 input)','Mesin press pengaman: operator harus menekan <b>kedua</b> tombol dengan dua tangan agar mesin bergerak.','AND = perkalian: 1·1 = 1, selain itu 0. Dipakai sebagai <b>masker/penyaring</b>: A AND 0 selalu 0, A AND 1 meneruskan A.'],
+['OR','A + B','oct','Output 1 jika <b>minimal satu input 1</b>. Output 0 hanya bila semua input 0.','Dua saklar <b>paralel</b>: arus mengalir bila salah satu (atau keduanya) tertutup.','74LS32 (4 gerbang OR, 2 input)','Alarm gedung: berbunyi jika pintu <b>atau</b> jendela terbuka.','OR = penjumlahan logika, jadi 1 + 1 = 1 (bukan 2). A OR 1 selalu 1 (memaksa output 1).'],
+['NOT','A′','hex','Output <b>kebalikan</b> input. Satu-satunya gerbang dengan satu input.','Saklar <i>normally closed</i>: ditekan, lampu justru mati.','74LS04 (6 inverter)','Sinyal <b>aktif-low</b> seperti tombol RESET: ditarik ke 0 untuk aktif, inverter mengubahnya jadi aktif-high.','Lingkaran kecil (<b>bubble</b>) pada simbol selalu berarti inversi. Segitiga tanpa bubble = buffer.'],
+['NAND','(A · B)′','dec','AND lalu dibalik: output 0 <b>hanya jika semua input 1</b>.','Saklar seri dengan lampu <i>normally closed</i>: lampu mati hanya saat keduanya ditekan.','74LS00 (4 gerbang NAND)','Blok penyusun chip memori flash dan hampir semua IC digital karena murah dan <b>universal</b>.','Simbol = AND + bubble. Hafalkan: NAND adalah &quot;AND yang dibalik&quot;, bukan &quot;AND dengan input terbalik&quot;.'],
+['NOR','(A + B)′','mu','OR lalu dibalik: output 1 <b>hanya jika semua input 0</b>.','Saklar paralel dengan lampu <i>normally closed</i>: lampu menyala hanya jika semua saklar terbuka.','74LS02 (4 gerbang NOR)','Latch SR (memori 1 bit) dibuat dari dua NOR saling silang; juga dipakai pada Apollo Guidance Computer.','Simbol = OR + bubble. Gerbang universal kedua selain NAND.'],
+['XOR','A ⊕ B','bin','Output 1 jika <b>kedua input berbeda</b> (jumlah input 1 ganjil).','Saklar tangga: dua saklar di atas dan bawah tangga mengontrol satu lampu.','74LS86 (4 gerbang XOR)','Penjumlah biner (jumlah bit), pembangkit <b>paritas</b> untuk deteksi error, dan enkripsi sederhana.','Trik: XOR dengan 1 <b>membalik</b> bit, XOR dengan 0 <b>meneruskan</b> bit. Ciri simbol: garis lengkung ganda di sisi input.'],
+['XNOR','A ⊙ B','ok','Output 1 jika <b>kedua input sama</b>. Kebalikan XOR.','Dua saklar tangga dengan lampu yang dibalik: menyala bila posisi keduanya sama.','74LS266 (4 gerbang XNOR)','<b>Komparator 1 bit</b>: mendeteksi apakah dua bit sama, dasar pembanding alamat dan data.','XNOR = XOR + bubble. Untuk pembanding n bit: AND-kan semua hasil XNOR tiap pasangan bit.']];
+const gerbangKonsep2=el=>{
+el.innerHTML=`<div class="card"><b>Cara membaca simbol gerbang (standar ANSI/IEEE)</b><div class="g3" style="margin-top:10px"><div><b>Bentuk badan</b><p class="mu">Datar di input, bulat di output = <b>AND</b>. Melengkung di kedua sisi = <b>OR</b>. Segitiga = <b>NOT/buffer</b>.</p></div><div><b>Bubble (○)</b><p class="mu">Lingkaran kecil di output berarti hasilnya <b>dibalik</b>: AND→NAND, OR→NOR, XOR→XNOR.</p></div><div><b>Garis ganda</b><p class="mu">Lengkungan tambahan di sisi input menandai <b>eksklusif</b> (XOR dan XNOR).</p></div></div></div>
+<div class="g3" style="margin-bottom:16px">${[['AND','NAND'],['OR','NOR'],['XOR','XNOR']].map(p=>`<div class="card"><b>${p[0]} → ${p[1]}</b>${ckt(one(p[0]))}${ckt(one(p[1]))}</div>`).join('')}</div>
+<h2>Tujuh gerbang dasar</h2><div class="g2">${GD.map(g=>{const S=one(g[0]),N=g[0]=='NOT'?['A']:['A','B'];return rc(0,g[0]+' &nbsp;<code>'+g[1]+'</code>',g[2],`${ckt(S)}<p>${g[3]}</p>${TT(S,N,['Y'])}<p><b>Analogi saklar:</b> ${g[4]}</p><p><b>Contoh nyata:</b> ${g[6]}</p><p class="mu"><b>IC:</b> ${g[5]}<br><b>Tips:</b> ${g[7]}</p>`)}).join('')}</div>
+<div class="g2"><div class="card"><b>Prioritas operasi</b><p><code>NOT &gt; AND &gt; OR</code></p><p class="mu">Contoh: <code>A + B · C′</code> dihitung <code>A + (B · (C′))</code>. Gunakan tanda kurung bila ragu.</p></div><div class="card"><b>Kenapa banyak input?</b><p class="mu">AND/OR/NAND/NOR dapat punya 3, 4, atau lebih input dengan aturan sama: AND 1 jika <b>semua</b> input 1; OR 0 jika <b>semua</b> input 0. XOR n-input bernilai 1 bila jumlah input 1 ganjil.</p></div></div>`};
+
+const gates2=el=>{let v={A:1,B:0};
+el.innerHTML=`<div class="card"><b>Buka/tutup saklar dengan ketukan</b><p class="mu">Kabel <b style="color:var(--bin)">berwarna hijau</b> membawa sinyal 1, kabel abu-abu membawa 0. Badan gerbang menyala saat outputnya 1, lampu kuning di ujung menunjukkan hasil. Baris tabel yang sesuai input saat ini akan bersinar.</p><div class="sw sw2"><button class="bit" data-s="A"><span></span><small>A</small></button><button class="bit" data-s="B"><span></span><small>B</small></button></div></div><div class="g2" id="gg"></div>`;
+const up=()=>{el.querySelectorAll('[data-s]').forEach(x=>{x.setAttribute('aria-pressed',!!v[x.dataset.s]);x.firstChild.textContent=v[x.dataset.s]});
+$('#gg').innerHTML=GD.map(g=>{const S=one(g[0]),N=g[0]=='NOT'?['A']:['A','B'],y=ev(S,v).Y;return rc(0,g[0]+' &nbsp;<code>'+g[1]+'</code>',g[2],`${ckt(S,v)}<p class="eq">${N.map(k=>k+'='+v[k]).join(', ')} → Y = <b>${y}</b></p>${TT(S,N,['Y'],v)}`)}).join('')};
+el.onclick=e=>{const x=e.target.closest('[data-s]');if(x){v[x.dataset.s]^=1;up()}};up()};
+
+const EX=[
+['Y = A·B + C′','AND(A,B) dan NOT(C) masuk ke OR. Y menyala jika A dan B sama-sama 1, atau C = 0.',{w:380,h:150,i:[['A',20],['B',40],['C',120]],g:[['AND',130,10,['A','B'],'n1'],['NOT',130,100,['C'],'n2'],['OR',270,55,['n1','n2'],'Y']],o:[['Y','Y']]}],
+['Y = (A+B)·C′','Urutan terbalik: OR(A,B) dulu, lalu di-AND dengan C′. Perhatikan kurung mengubah susunan gerbang.',{w:380,h:150,i:[['A',20],['B',40],['C',120]],g:[['OR',130,10,['A','B'],'n1'],['NOT',130,100,['C'],'n2'],['AND',270,55,['n1','n2'],'Y']],o:[['Y','Y']]}],
+['Y = A′B + AB′ (XOR)','XOR dibangun dari 2 NOT, 2 AND, dan 1 OR. Cocokkan tabelnya dengan gerbang XOR: sama persis.',{w:450,h:180,i:[['A',20,95],['B',150,80]],g:[['NOT',120,0,['A'],'na'],['NOT',120,130,['B'],'nb'],['AND',250,15,['na','B'],'n1',215],['AND',250,105,['A','nb'],'n2',215],['OR',370,60,['n1','n2'],'Y']],o:[['Y','Y']]}]];
+const exprCkt=el=>{let k=0;
+el.innerHTML=`<div class="card"><b>Dari ekspresi Boolean ke rangkaian</b><p class="mu">Cara membaca: kerjakan dari operasi <b>paling dalam / prioritas tertinggi</b> (NOT, lalu AND, lalu OR). Tiap operasi menjadi satu gerbang, outputnya masuk ke gerbang berikutnya.</p>${sg(EX.map((x,i)=>[i,x[0]]),0)}<div id="xc" style="margin-top:12px"></div></div>`;
+const up=()=>{act(el,k);const[t,ket,S]=EX[k],N=S.i.map(i=>i[0]);mount($('#xc'),N,S,(v)=>`<p>${ket}</p><p class="mu">Tabel kebenaran lengkap (baris aktif bersinar):</p>${TT(S,N,['Y'],v)}`)};
+el.addEventListener('click',e=>{const x=e.target.closest('[data-k]');if(x&&el.contains(x)){k=+x.dataset.k;up()}});up()};
+
+/* ===== MINGGU 5: adder level gerbang ===== */
+const AS=[{w:290,h:130,i:[['A',20,100],['B',40,110]],g:[['XOR',130,10,['A','B'],'S'],['AND',130,70,['A','B'],'C']],o:[['S','S'],['C','C']]},
+{w:580,h:235,i:[['A',20,90],['B',40,100],['Cin',215,245]],g:[['XOR',130,10,['A','B'],'p',215],['AND',130,70,['A','B'],'g'],['XOR',280,10,['p','Cin'],'S'],['AND',280,150,['p','Cin'],'q'],['OR',410,100,['g','q'],'Cout',380]],o:[['S','S'],['Cout','Cout']]}];
+const adderCkt=el=>{let k=0;
+el.innerHTML=`<div class="card"><b>Adder di level gerbang</b><p class="mu">Ubah input dan amati sinyal merambat melalui tiap gerbang.</p>${sg([[0,'Half Adder'],[1,'Full Adder','dec']],0)}<div id="ac" style="margin-top:12px"></div></div>`;
+const up=()=>{act(el,k);const S=AS[k],N=S.i.map(i=>i[0]),O=k?['S','Cout']:['S','C'];
+mount($('#ac'),N,S,(v,n)=>{const t=N.reduce((s,x)=>s+v[x],0);return `<p class="eq">${N.map(x=>v[x]).join(' + ')} = ${t} desimal = <b>${n[O[1]]}${n.S}</b>₂ → Cout/C = <b>${n[O[1]]}</b>, S = <b>${n.S}</b></p>`+(k?`<p class="mu"><b>Cara kerja:</b> XOR pertama menghasilkan <b>P</b> = A⊕B (bit berbeda, calon penjumlah). XOR kedua menambahkan Cin → <b>S</b>. AND pertama (A·B) = <b>Generate</b>: carry pasti terjadi. AND kedua (P·Cin) = carry yang <b>dirambatkan</b> dari Cin. OR menggabungkan keduanya → Cout. Nilai P saat ini: <b>${n.p}</b>, G: <b>${n.g}</b>.</p>`:`<p class="mu"><b>Cara kerja:</b> XOR memberi bit jumlah (1 bila A dan B berbeda). AND memberi carry (hanya 1+1 yang menghasilkan carry). Half adder tidak punya Cin sehingga tidak bisa dirantai; dua half adder + OR = full adder.</p>`)+TT(S,N,O,v)})};
+el.addEventListener('click',e=>{const x=e.target.closest('[data-k]');if(x&&el.contains(x)){k=+x.dataset.k;up()}});up()};
+
+/* ===== MINGGU 6: gerbang universal level gerbang ===== */
+const UC=t=>[['NOT A',{w:290,h:70,i:[['A',35,75]],g:[[t,110,15,['A','A'],'Y']],o:[['Y','Y']]},v=>1-v.A],
+['A AND B',t=='NAND'?{w:360,h:80,i:[['A',25],['B',45]],g:[['NAND',110,15,['A','B'],'n',170],['NAND',230,15,['n','n'],'Y']],o:[['Y','Y']]}:{w:430,h:140,i:[['A',20,90],['B',120,90]],g:[['NOR',110,0,['A','A'],'a'],['NOR',110,100,['B','B'],'b'],['NOR',260,50,['a','b'],'Y']],o:[['Y','Y']]},v=>v.A&v.B],
+['A OR B',t=='NAND'?{w:430,h:140,i:[['A',20,90],['B',120,90]],g:[['NAND',110,0,['A','A'],'a'],['NAND',110,100,['B','B'],'b'],['NAND',260,50,['a','b'],'Y']],o:[['Y','Y']]}:{w:360,h:80,i:[['A',25],['B',45]],g:[['NOR',110,15,['A','B'],'n',180],['NOR',240,15,['n','n'],'Y']],o:[['Y','Y']]},v=>v.A|v.B]];
+const UX=[['A XOR B (hanya dari 4 NAND)',{w:470,h:170,i:[['A',60,80],['B',80,80]],g:[['NAND',110,50,['A','B'],'n1',185],['NAND',230,0,['A','n1'],'n2',300],['NAND',230,100,['n1','B'],'n3',300],['NAND',350,50,['n2','n3'],'Y']],o:[['Y','Y']]},v=>v.A^v.B]];
+const uni2=el=>{let v={A:1,B:0};
+el.innerHTML=`<div class="card"><b>Pembuktian: bangun gerbang dari NAND atau NOR saja</b><p class="mu">Setiap rangkaian di bawah <b>hanya memakai satu jenis gerbang</b>. Bandingkan hasilnya dengan gerbang aslinya. Ubah A dan B untuk menguji semua kombinasi.</p><div class="sw sw2"><button class="bit" data-s="A"><span></span><small>A</small></button><button class="bit" data-s="B"><span></span><small>B</small></button></div></div><div class="g2" id="uo"></div>`;
+const up=()=>{el.querySelectorAll('[data-s]').forEach(x=>{x.setAttribute('aria-pressed',!!v[x.dataset.s]);x.firstChild.textContent=v[x.dataset.s]});
+const card=(t,[n,S,f])=>{const y=ev(S,v).Y,r=f(v),c=t=='XOR'?'bin':t=='NAND'?'bin':'oct';return rc(0,(t=='XOR'?'':t+': ')+n,c,`${ckt(S,v)}<p class="eq">Rangkaian: <b>${y}</b> &nbsp; Gerbang asli: <b>${r}</b> &nbsp; <span class="${y==r?'ok':'no'}">${y==r?'✓ cocok':'✗ beda'}</span></p>`)};
+$('#uo').innerHTML=UC('NAND').map(x=>card('NAND',x)).join('')+UC('NOR').map(x=>card('NOR',x)).join('')+UX.map(x=>card('XOR',x)).join('')};
+el.onclick=e=>{const x=e.target.closest('[data-s]');if(x){v[x.dataset.s]^=1;up()}};up()};
+
+/* ===== MUX & Decoder level gerbang ===== */
+const MS={w:460,h:150,i:[['D0',20],['S',75,90],['D1',100]],g:[['NOT',130,55,['S'],'nS',175],['AND',210,10,['D0','nS'],'a'],['AND',210,90,['D1','S'],'b'],['OR',330,50,['a','b'],'Y',300]],o:[['Y','Y']]};
+const mux2=el=>{mux(el);const d=document.createElement('div');d.className='card';d.innerHTML='<b>MUX 2:1 di level gerbang</b><p class="mu">Y = S′·D0 + S·D1. Saat S = 0 gerbang AND atas terbuka (D0 lewat), saat S = 1 AND bawah terbuka (D1 lewat). Inilah arti &quot;selektor data&quot;: S membuka satu jalur dan menutup yang lain.</p><div></div>';el.appendChild(d);mount(d.lastChild,['D0','D1','S'],MS,(v,n)=>`<p class="eq">S=${v.S} → Y = D${v.S} = <b>${n.Y}</b></p>`)};
+const DS={w:400,h:240,i:[['A1',20,65],['A0',205,80]],g:[['NOT',110,0,['A1'],'n1',185],['NOT',110,185,['A0'],'n0',200],['AND',240,0,['n1','n0'],'Y0'],['AND',240,55,['n1','A0'],'Y1'],['AND',240,110,['A1','n0'],'Y2'],['AND',240,165,['A1','A0'],'Y3']],o:[['Y0','Y0'],['Y1','Y1'],['Y2','Y2'],['Y3','Y3']]};
+const dec2=el=>{dec(el);const d=document.createElement('div');d.className='card';d.innerHTML='<b>Decoder 2-to-4 di level gerbang</b><p class="mu">Tiap output adalah satu <b>minterm</b> dari input: Y0 = A1′A0′, Y1 = A1′A0, Y2 = A1A0′, Y3 = A1A0. Empat gerbang AND memeriksa kombinasi berbeda, sehingga hanya satu yang bernilai 1.</p><div></div>';el.appendChild(d);mount(d.lastChild,['A1','A0'],DS,(v,n)=>`<p class="eq">A1A0 = ${v.A1}${v.A0} → aktif: <b>Y${v.A1*2+v.A0}</b></p>`)};
+
+/* ===== DAFTAR MINGGU =====
+   Tambah materi: M[n]={judul:'...',sub:[{label:'Nama submenu',ket:'keterangan singkat',render:el=>{el.innerHTML='...'}}]} */
+M[1]={judul:'Pendahuluan dan Sistem Bilangan',sub:[
+{label:'Apa itu Sistem Digital?',ket:'Bahan: SISDIG_1. Definisi, analog vs digital, dan aplikasi di kehidupan nyata.',render:pengantar},
+{label:'Konsep Biner',ket:'Basis 2, bit, byte, MSB, LSB, dan bobot posisi (2ⁿ).',render:konsepBiner},
+{label:'Metode Konversi',ket:'Strategi: ubah dulu ke biner, lalu ke basis tujuan. Desimal↔Biner, Biner→Heksa, Biner→Oktal.',render:metodeKonversi},
+{label:'Konsep Bit Lab',ket:'Memahami cara kerja simulator Bit Lab dan strategi latihannya.',render:labKonsep},
+{label:'Bit Lab Interaktif',ket:'Nyalakan/matikan bit, lihat pengelompokan 4 bit (heksa), 3 bit (oktal), dan bobot (desimal).',render:lab},
+{label:'Konverter Bertahap',ket:'Masukkan bilangan di basis manapun, ikuti langkah konversi lewat biner ke basis lain.',render:conv},
+{label:'Konsep Kuis',ket:'Pahami jenis soal, tips mengerjakan, dan tujuan latihan kuis.',render:quizKonsep},
+{label:'Kuis Konversi Bilangan',ket:'7 tipe soal acak. Latihan kecepatan dan ketepatan. Jawaban case-insensitive.',render:quiz}]};
+M[2]={judul:'Bilangan Negatif dan Aritmetika Biner',sub:[
+{label:'Konsep Tiga Skema',ket:'Bahan: SISDIG_2. Perbandingan SM, 1\'s dan 2\'s complement.',render:negKonsep},
+{label:'Simulator Bilangan Negatif',ket:'Pilih skema, ubah nilai, lihat representasi bitnya berubah.',render:neg},
+{label:'Konsep Aritmetika',ket:'Penjumlahan, pengurangan via penjumlahan, dan deteksi overflow.',render:arKonsep},
+{label:'Simulator Aritmetika',ket:'Hitung A + B atau A − B, lihat langkah per langkah dan deteksi overflow.',render:ar}]};
+M[3]={judul:'Aljabar Boolean dan Gerbang Logika',sub:[
+{label:'Konsep Gerbang Logika',ket:'Bahan: SISDIG_3. AND, OR, NOT, NAND, NOR, XOR, XNOR dengan analogi saklar.',render:gerbangKonsep2},
+{label:'Simulator Gerbang',ket:'Buka/tutup saklar input A dan B: kabel, badan gerbang, dan lampu output menyala sesuai sinyal, lengkap dengan tabel kebenaran.',render:gates2},
+{label:'Dari Ekspresi ke Rangkaian',ket:'Ubah ekspresi Boolean menjadi rangkaian gerbang yang bisa diuji langsung, termasuk XOR dari AND-OR-NOT.',render:exprCkt},
+{label:'Bentuk SOP dan POS',ket:'Sum of Product dan Product of Sum: dua cara menulis fungsi Boolean.',render:bentukKonsep},
+{label:'Tabel Kebenaran Interaktif',ket:'Atur output, lihat minterm (SOP) dan maxterm (POS) terbentuk otomatis.',render:sop},
+{label:'Hukum Boolean',ket:'Identitas, dominasi, De Morgan, dll. Dipakai untuk menyederhanakan ekspresi.',render:hukum}]};
+M[4]={judul:'Penyederhanaan dengan Karnaugh Map',sub:[
+{label:'Apa itu K-Map?',ket:'Bahan: SISDIG_4. Mengapa K-Map lebih baik, kode Gray, aturan pengelompokan, don\'t care.',render:kkonsep},
+{label:'Variasi K-Map',ket:'Perbedaan 2, 3, dan 4 variabel, serta strategi pengelompokan optimal.',render:kmKonsep},
+{label:'K-Map Solver',ket:'Isi peta 2, 3, atau 4 variabel. Ketuk sel untuk ubah nilai (0→1→X). Lihat kelompok dan hasil minimum.',render:kmap}]};
+M[5]={judul:'Rangkaian Adder dan Subtractor',sub:[
+{label:'Konsep Adder dan Subtractor',ket:'Bahan: SISDIG_5. Half/Full Adder, Half/Full Subtractor, tabel kebenaran, dan persamaan logikanya.',render:addKonsep},
+{label:'Adder di Level Gerbang',ket:'Half Adder dan Full Adder digambar dengan simbol gerbang. Ubah input, lihat sinyal P, G, carry, dan jumlah.',render:adderCkt},
+{label:'Simulator Adder-Subtractor 4-bit',ket:'Satu rangkaian Full Adder untuk tambah dan kurang. Mode M mengatur B dan Cin awal.',render:adsub},
+{label:'RCA vs CLA',ket:'Ripple Carry vs Carry Lookahead: Generate, Propagate, dan perbandingannya.',render:rcacla}]};
+M[6]={judul:'Multilevel NAND/NOR dan Multiplexer',sub:[
+{label:'Gerbang Universal NAND dan NOR',ket:'Bahan: SISDIG_6. Semua fungsi logika bisa dibentuk dari NAND atau NOR; implementasi SOP dan POS.',render:uniKonsep},
+{label:'Pembuktian Interaktif',ket:'Bangun NOT, AND, OR hanya dari NAND atau NOR, lalu cocokkan dengan gerbang asli.',render:uni2},
+{label:'Multiplexer (MUX)',ket:'MUX sebagai data selector: pilih input data lewat saluran select.',render:mux2}]};
+M[7]={judul:'Decoder, Encoder, dan BCD 7-Segment',sub:[
+{label:'Konsep Decoder dan Encoder',ket:'Bahan: SISDIG_7. Prinsip kerja, aplikasi, dan perbandingan decoder vs encoder.',render:decKonsep},
+{label:'Simulator Decoder 3-to-8',ket:'Ubah input dan Enable, lihat output mana yang aktif.',render:dec2},
+{label:'Simulator Priority Encoder',ket:'Aktifkan beberapa input, encoder memilih prioritas tertinggi.',render:enc},
+{label:'BCD ke 7-Segment',ket:'Tabel kebenaran BCD ke segmen a–g, common cathode vs common anode.',render:sevenseg}]};
+for(let i=8;i<=14;i++)M[i]={judul:'',sub:[]};
+
+/* ===== NAVIGASI ===== */
+let W=1,S=0;
+const side=()=>{$('#nav').innerHTML=Object.keys(M).map(i=>{const m=M[i],h=m.sub.length;
+return `<button class="wk${i==W?' on':''}${h?'':' em'}" data-w="${i}"><b>${i}</b><span>${m.judul||'Segera hadir'}</span></button>`+(i==W&&h?`<div class="sl">${m.sub.map((x,j)=>`<a href="#${i}-${j}" class="${j==S?'on':''}">${x.label}</a>`).join('')}</div>`:'')}).join('')};
+const page=()=>{
+const m=M[W],pg=$('#pg');
+if(!m.sub.length){pg.innerHTML=`<p class="crumb">Minggu ${W}</p><h1>Segera hadir</h1><div class="card"><p>Materi minggu ${W} belum tersedia. Tambahkan di skrip: <code>M[${W}]={judul:'…',sub:[{label:'…',render:fn}]}</code>.</p></div>`;return}
+const x=m.sub[S],f=[];
+Object.keys(M).forEach(w=>M[w].sub.forEach((s,i)=>f.push([w,i,s.label])));
+const k=f.findIndex(y=>y[0]==W&&y[1]==S),p=f[k-1],nx=f[k+1];
+pg.innerHTML=`<p class="crumb">Minggu ${W}: ${m.judul}</p><h1>${x.label}</h1>${x.ket?`<p class="lead">${x.ket}</p>`:''}<div id="box"></div><div class="pn">${p?`<a class="btn" href="#${p[0]}-${p[1]}">Sebelumnya: ${p[2]}</a>`:'<span></span>'}${nx?`<a class="btn" href="#${nx[0]}-${nx[1]}">Berikutnya: ${nx[2]}</a>`:''}</div>`;
+x.render($('#box'));scrollTo(0,0)};
+const show=()=>{const m=(location.hash.match(/#(\d+)-(\d+)/)||[]).slice(1).map(Number);
+if(m.length&&M[m[0]]&&M[m[0]].sub[m[1]]){W=m[0];S=m[1]}
+side();page()};
+$('#nav').onclick=e=>{const b=e.target.closest('[data-w]');if(!b)return;const w=+b.dataset.w;
+if(M[w].sub.length)location.hash=w+'-0';else{W=w;S=0;side();page()}};
+$('#th').onclick=()=>{const r=document.documentElement,t=(r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'))=='dark'?'light':'dark';r.dataset.theme=t;try{localStorage.t=t}catch(e){}};
+addEventListener('hashchange',show);show();
+</script>
+</body>
+</html>
